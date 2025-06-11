@@ -1,0 +1,47 @@
+The program took 0.1630568504333496 seconds to complete.
+The number of tuple(s) in the V set is: 18
+The number of tuple(s) in the E set is: 18
+The number of tuple(s) with no pairs is: 18
+The number of indecomposable tuple(s) is: 18
+
+The tuples in the V set are:
+(1, 20, 39, 54)
+(2, 21, 40, 51)
+(3, 18, 37, 56)
+(3, 22, 41, 48)
+(4, 23, 42, 45)
+(5, 24, 42, 43)
+(6, 17, 36, 55)
+(6, 25, 39, 44)
+(7, 26, 36, 45)
+(8, 27, 33, 46)
+(9, 16, 35, 54)
+(9, 28, 30, 47)
+(10, 27, 29, 48)
+(11, 24, 30, 49)
+(12, 15, 34, 53)
+(12, 21, 31, 50)
+(13, 18, 32, 51)
+(14, 15, 33, 52)
+The number of tuple(s) in the V set is: 18
+
+The indecomposable tuples are:
+(1, 20, 39, 54)
+(2, 21, 40, 51)
+(3, 18, 37, 56)
+(3, 22, 41, 48)
+(4, 23, 42, 45)
+(5, 24, 42, 43)
+(6, 17, 36, 55)
+(6, 25, 39, 44)
+(7, 26, 36, 45)
+(8, 27, 33, 46)
+(9, 16, 35, 54)
+(9, 28, 30, 47)
+(10, 27, 29, 48)
+(11, 24, 30, 49)
+(12, 15, 34, 53)
+(12, 21, 31, 50)
+(13, 18, 32, 51)
+(14, 15, 33, 52)
+The number of indecomposable tuple(s) is: 18

@@ -1,0 +1,70 @@
+The program took 0.0009975433349609375 seconds to complete.
+The number of tuple(s) in the V set is: 12
+The number of tuple(s) in the E set is: 12
+The number of tuple(s) with no pairs is: 12
+The number of indecomposable tuple(s) is: 12
+
+The tuples in the V set are:
+(1, 6, 10, 13)
+(1, 6, 11, 12)
+(1, 7, 10, 12)
+(2, 5, 9, 14)
+(2, 5, 11, 12)
+(2, 7, 9, 12)
+(3, 4, 9, 14)
+(3, 4, 10, 13)
+(3, 5, 8, 14)
+(3, 6, 8, 13)
+(4, 7, 9, 10)
+(5, 6, 8, 11)
+The number of tuple(s) in the V set is: 12
+
+The indecomposable tuples are:
+(1, 6, 10, 13)
+(1, 6, 11, 12)
+(1, 7, 10, 12)
+(2, 5, 9, 14)
+(2, 5, 11, 12)
+(2, 7, 9, 12)
+(3, 4, 9, 14)
+(3, 4, 10, 13)
+(3, 5, 8, 14)
+(3, 6, 8, 13)
+(4, 7, 9, 10)
+(5, 6, 8, 11)
+The number of indecomposable tuple(s) is: 12
+The program took 0.012613534927368164 seconds to complete.
+The number of tuple(s) in the V set is: 12
+The number of tuple(s) in the E set is: 12
+The number of tuple(s) with no pairs is: 12
+The number of indecomposable tuple(s) is: 12
+
+The tuples in the V set are:
+(1, 6, 10, 13)
+(1, 6, 11, 12)
+(1, 7, 10, 12)
+(2, 5, 9, 14)
+(2, 5, 11, 12)
+(2, 7, 9, 12)
+(3, 4, 9, 14)
+(3, 4, 10, 13)
+(3, 5, 8, 14)
+(3, 6, 8, 13)
+(4, 7, 9, 10)
+(5, 6, 8, 11)
+The number of tuple(s) in the V set is: 12
+
+The indecomposable tuples are:
+(1, 6, 10, 13)
+(1, 6, 11, 12)
+(1, 7, 10, 12)
+(2, 5, 9, 14)
+(2, 5, 11, 12)
+(2, 7, 9, 12)
+(3, 4, 9, 14)
+(3, 4, 10, 13)
+(3, 5, 8, 14)
+(3, 6, 8, 13)
+(4, 7, 9, 10)
+(5, 6, 8, 11)
+The number of indecomposable tuple(s) is: 12

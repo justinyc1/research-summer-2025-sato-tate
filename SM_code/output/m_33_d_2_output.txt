@@ -1,0 +1,31 @@
+The program took 0.014226436614990234 seconds to complete.
+The number of tuple(s) in the V set is: 10
+The number of tuple(s) in the E set is: 10
+The number of tuple(s) with no pairs is: 10
+The number of indecomposable tuple(s) is: 10
+
+The tuples in the V set are:
+(1, 12, 23, 30)
+(2, 13, 24, 27)
+(3, 10, 21, 32)
+(3, 14, 24, 25)
+(4, 15, 21, 26)
+(5, 16, 18, 27)
+(6, 9, 20, 31)
+(6, 15, 17, 28)
+(7, 12, 18, 29)
+(8, 9, 19, 30)
+The number of tuple(s) in the V set is: 10
+
+The indecomposable tuples are:
+(1, 12, 23, 30)
+(2, 13, 24, 27)
+(3, 10, 21, 32)
+(3, 14, 24, 25)
+(4, 15, 21, 26)
+(5, 16, 18, 27)
+(6, 9, 20, 31)
+(6, 15, 17, 28)
+(7, 12, 18, 29)
+(8, 9, 19, 30)
+The number of indecomposable tuple(s) is: 10

@@ -1,0 +1,58 @@
+Running method validate_set_V(m = 9, d = 2) and generating using halves:
+
+Summary:
+given m = 9, d = 2
+Calculations took 0 days, 0 hours, 0 minutes, 0 seconds, 4 miliseconds, 760 microseconds, 500 nanoseconds.
+Z/mZ:  [0, 1, 2, 3, 4, 5, 6, 7, 8]
+Z/mZ*: [1, 2, 4, 5, 7, 8]
+All ascending & non-repeating tuple (size 4) combinations possible for the U set: 70
+                      V set: contains 8 tuples
+          all_are_pairs set: contains 6 tuples
+         some_are_pairs set: contains 0 tuples
+         none_are_pairs set: contains 2 tuples
+         indecomposable set: contains 2 tuples
+decomposable & no pairs set: contains 0 tuples
+     exceptional_cycles set: contains 2 tuples
+
+Print V set (contains 8 tuples): {
+(1, 2, 7, 8)
+(1, 3, 6, 8)
+(1, 4, 5, 8)
+(1, 4, 6, 7)
+(2, 3, 5, 8)
+(2, 3, 6, 7)
+(2, 4, 5, 7)
+(3, 4, 5, 6)
+}
+
+Print all_are_pairs (contains 6 tuples): {
+(1, 4, 5, 8)
+(2, 4, 5, 7)
+(3, 4, 5, 6)
+(2, 3, 6, 7)
+(1, 3, 6, 8)
+(1, 2, 7, 8)
+}
+
+Print some_are_pairs (contains 0 tuples): {
+}
+
+Print none_are_pairs (contains 2 tuples): {
+(2, 3, 5, 8)
+(1, 4, 6, 7)
+}
+
+Print indecomposable (contains 2 tuples): {
+(2, 3, 5, 8)
+(1, 4, 6, 7)
+}
+
+Print decomposable but no pairs (contains 0 tuples): {
+}
+
+Print exceptional cycles (contains 2 tuples): {
+(2, 3, 5, 8)
+(1, 4, 6, 7)
+}
+
+method validate_set_V(9, 2) ran to completion.

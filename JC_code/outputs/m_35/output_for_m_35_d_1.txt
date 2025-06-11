@@ -1,0 +1,72 @@
+Running method validate_set_V(m = 35, d = 1) and generating using halves:
+
+Summary:
+given m = 35, d = 1
+Calculations took 0 days, 0 hours, 0 minutes, 0 seconds, 4 miliseconds, 977 microseconds, 500 nanoseconds.
+Z/mZ:  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34]
+Z/mZ*: [32, 1, 33, 2, 34, 3, 4, 6, 8, 9, 11, 12, 13, 16, 17, 18, 19, 22, 23, 24, 26, 27, 29, 31]
+All ascending & non-repeating tuple (size 2) combinations possible for the U set: 561
+                      V set: contains 17 tuples
+          all_are_pairs set: contains 17 tuples
+         some_are_pairs set: contains 0 tuples
+         none_are_pairs set: contains 0 tuples
+         indecomposable set: contains 0 tuples
+decomposable & no pairs set: contains 0 tuples
+     exceptional_cycles set: contains 0 tuples
+
+Print V set (contains 17 tuples): {
+(1, 34)
+(2, 33)
+(3, 32)
+(4, 31)
+(5, 30)
+(6, 29)
+(7, 28)
+(8, 27)
+(9, 26)
+(10, 25)
+(11, 24)
+(12, 23)
+(13, 22)
+(14, 21)
+(15, 20)
+(16, 19)
+(17, 18)
+}
+
+Print all_are_pairs (contains 17 tuples): {
+(5, 30)
+(2, 33)
+(3, 32)
+(11, 24)
+(13, 22)
+(9, 26)
+(17, 18)
+(4, 31)
+(6, 29)
+(10, 25)
+(15, 20)
+(14, 21)
+(7, 28)
+(8, 27)
+(1, 34)
+(12, 23)
+(16, 19)
+}
+
+Print some_are_pairs (contains 0 tuples): {
+}
+
+Print none_are_pairs (contains 0 tuples): {
+}
+
+Print indecomposable (contains 0 tuples): {
+}
+
+Print decomposable but no pairs (contains 0 tuples): {
+}
+
+Print exceptional cycles (contains 0 tuples): {
+}
+
+method validate_set_V(35, 1) ran to completion.

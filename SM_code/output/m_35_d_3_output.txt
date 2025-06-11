@@ -1,0 +1,46 @@
+The program took 0.6732954978942871 seconds to complete.
+The number of tuple(s) in the V set is: 6
+The number of tuple(s) in the E set is: 6
+The number of tuple(s) with no pairs is: 6
+The number of indecomposable tuple(s) is: 6
+
+The tuples in the V set are:
+(1, 8, 15, 22, 29, 30)
+(2, 9, 16, 23, 25, 30)
+(3, 10, 17, 20, 24, 31)
+(4, 11, 15, 18, 25, 32)
+(5, 6, 13, 20, 27, 34)
+(5, 10, 12, 19, 26, 33)
+The number of tuple(s) in the V set is: 6
+
+The indecomposable tuples are:
+(1, 8, 15, 22, 29, 30)
+(2, 9, 16, 23, 25, 30)
+(3, 10, 17, 20, 24, 31)
+(4, 11, 15, 18, 25, 32)
+(5, 6, 13, 20, 27, 34)
+(5, 10, 12, 19, 26, 33)
+The number of indecomposable tuple(s) is: 6
+The program took 0.5443403720855713 seconds to complete.
+The number of tuple(s) in the V set is: 6
+The number of tuple(s) in the E set is: 6
+The number of tuple(s) with no pairs is: 6
+The number of indecomposable tuple(s) is: 6
+
+The tuples in the V set are:
+(1, 8, 15, 22, 29, 30)
+(2, 9, 16, 23, 25, 30)
+(3, 10, 17, 20, 24, 31)
+(4, 11, 15, 18, 25, 32)
+(5, 6, 13, 20, 27, 34)
+(5, 10, 12, 19, 26, 33)
+The number of tuple(s) in the V set is: 6
+
+The indecomposable tuples are:
+(1, 8, 15, 22, 29, 30)
+(2, 9, 16, 23, 25, 30)
+(3, 10, 17, 20, 24, 31)
+(4, 11, 15, 18, 25, 32)
+(5, 6, 13, 20, 27, 34)
+(5, 10, 12, 19, 26, 33)
+The number of indecomposable tuple(s) is: 6

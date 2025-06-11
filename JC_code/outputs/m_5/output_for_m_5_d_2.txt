@@ -1,0 +1,40 @@
+Running method validate_set_V(m = 5, d = 2) and generating using halves:
+
+Summary:
+given m = 5, d = 2
+Calculations took 0 days, 0 hours, 0 minutes, 0 seconds, 4 miliseconds, 483 microseconds, 800 nanoseconds.
+Z/mZ:  [0, 1, 2, 3, 4]
+Z/mZ*: [1, 2, 3, 4]
+All ascending & non-repeating tuple (size 4) combinations possible for the U set: 1
+                      V set: contains 1 tuples
+          all_are_pairs set: contains 1 tuples
+         some_are_pairs set: contains 0 tuples
+         none_are_pairs set: contains 0 tuples
+         indecomposable set: contains 0 tuples
+decomposable & no pairs set: contains 0 tuples
+     exceptional_cycles set: contains 0 tuples
+
+Print V set (contains 1 tuples): {
+(1, 2, 3, 4)
+}
+
+Print all_are_pairs (contains 1 tuples): {
+(1, 2, 3, 4)
+}
+
+Print some_are_pairs (contains 0 tuples): {
+}
+
+Print none_are_pairs (contains 0 tuples): {
+}
+
+Print indecomposable (contains 0 tuples): {
+}
+
+Print decomposable but no pairs (contains 0 tuples): {
+}
+
+Print exceptional cycles (contains 0 tuples): {
+}
+
+method validate_set_V(5, 2) ran to completion.
