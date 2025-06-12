@@ -195,7 +195,6 @@ public class Tuple implements Comparable<Tuple> {
         return sb.toString();
     }
 
-
     /** Converts the tuple into a List
      * 
      * @return a List with the same content as the tuple
@@ -206,6 +205,15 @@ public class Tuple implements Comparable<Tuple> {
             newList.add(elements[i]);
         }
         return newList;
+    }
+
+    public String toCSV() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < elements.length-1; i++) {
+            sb.append(elements[i]).append(",");
+        }
+        sb.append(elements[elements.length-1]);
+        return sb.toString();
     }
 
     /** Compares a tuple to another object and returns true if both tuples are equal, equal as in for tuples a and b, a_i = b_i for all i

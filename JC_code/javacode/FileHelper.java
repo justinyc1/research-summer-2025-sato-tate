@@ -7,6 +7,7 @@ import java.nio.file.*;
 public class FileHelper {
     static String myRootDir = "JC_code";
     static String outputsDir = "JC_code\\outputs";
+    static String ecOutputsDir = "JC_code\\outputs_ec_csvs";
     static String myTestDir = "JC_code\\.myTest";
     public static void main(String[] args) throws ProjectException, IOException {
         // printDirectoryAndContents(new File(myRootDir));

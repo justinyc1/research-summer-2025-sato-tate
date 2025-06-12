@@ -23,6 +23,7 @@ public class Project {
     static boolean skipThisMAndD = false;
     static boolean terminateIfTimeLimit = false;
     static boolean allowOverwrite = false;
+    static boolean printEC = false;
     static String generateMethod = ""; // "recursion", "halves"
     static boolean validate_split_in_halves = false;
     static int valid_split_in_half_count = 0;
@@ -30,19 +31,36 @@ public class Project {
     static int valid_tuple_sum_count = 0;
     static PrintWriter debugOutput = null;
     public static void main(String[] args) throws ProjectException, IOException {
-        // test_all_m_and_d_combinations(1246, 1600, 2, 2, false, true, false, -1, false, "halves", false, false);
-        // test_all_m_and_d_combinations(51, 51, 11, 15, false, true, false, -1, false, "halves", false, false);
-        // test_all_m_and_d_combinations(51, 51, 16, 16, false, true, false, -1, false, "halves", false, false);
-        // test_all_m_and_d_combinations(2883, 3600, 2, 2, false, true, false, -1, false, "halves", false, false);
-        // test_all_m_and_d_combinations(49, 49, 11, 999, false, true, false, -1, false, "halves", false, false);
+        // test_all_m_and_d_combinations(1246, 1600, 2, 2, false, true, false, false, -1, false, "halves", false, false);
+        // test_all_m_and_d_combinations(51, 51, 11, 15, false, true, false, false, -1, false, "halves", false, false);
+        // test_all_m_and_d_combinations(51, 51, 16, 16, false, true, false, false, -1, false, "halves", false, false);
+        // test_all_m_and_d_combinations(2883, 3600, 2, 2, false, true, false, false, -1, false, "halves", false, false);
+        // test_all_m_and_d_combinations(49, 49, 11, 999, false, true, false, false, -1, false, "halves", false, false);
 
-        // test_all_m_and_d_combinations(49, 49, 11, 999, true, true, true, -1, false, "halves", false, false);
+        // test_all_m_and_d_combinations(49, 49, 11, 999, true, true, true, false, -1, false, "halves", false, false);
 
-        test_all_m_and_d_combinations(63, 100, 1, 999, true, true, true, 1800, false, "halves", false, false); // 30 minutes "soft" limit (if reached, finish current then skip)
+        // test_all_m_and_d_combinations(63, 100, 1, 999, true, true, true, false, 1800, false, "halves", false, false); // 30 minutes "soft" limit (if reached, finish current then skip)
+
+        test_all_m_and_d_combinations(
+            1, 
+            100, 
+            1, 
+            999, 
+            false, 
+            true, 
+            false, 
+            true, 
+            1800, 
+            false, 
+            "halves", 
+            false, 
+            false
+        ); // 30 minutes "soft" limit (if reached, finish current then skip)
     }
 
-    public static void test_all_m_and_d_combinations(int m_start, int m_end, int d_start, int d_end, boolean print_outputs, boolean automated, boolean overwrite_outputs, int max_seconds_allowed, boolean terminate_if_time_limit, String generate_method, boolean validate_halves, boolean check_sum) throws IOException {
+    public static void test_all_m_and_d_combinations(int m_start, int m_end, int d_start, int d_end, boolean print_outputs, boolean automated, boolean overwrite_outputs, boolean print_exceptional_cycles, int max_seconds_allowed, boolean terminate_if_time_limit, String generate_method, boolean validate_halves, boolean check_sum) throws IOException {
         allowOverwrite = overwrite_outputs;
+        printEC = print_exceptional_cycles;
         maxSecondsAllowed = max_seconds_allowed;
         generateMethod = generate_method;
         validate_split_in_halves = validate_halves;
@@ -51,12 +69,17 @@ public class Project {
         if (!automated) System.out.println("Press the Enter Key to process the next m and d values");
         sc.useDelimiter("\r"); // a single enter press is now the separator.
         for (int i = m_start; i <= m_end; ++i) {
+            FileHelper.deleteAllEmptyFiles(new File(FileHelper.outputsDir)); // delete empty output files
+            FileHelper.deleteAllEmptyFiles(new File(FileHelper.ecOutputsDir)); // delete empty EC output files
             if (i % 2 == 0) continue;
             // if (i % 3 != 0) continue; //DEBUG m=3q
+            if (!isPerfectSquare(i)) continue; //DEBUG m=p^2
             int d_limit = (i-1)/2;
             int jSkipToValue = -1;
             for (int j = d_start; j <= d_limit && j <= d_end; ++j) {
-                FileHelper.deleteAllEmptyFiles(new File(FileHelper.outputsDir)); // delete empty files
+                File output_for_this_i_and_j = new File("JC_code\\outputs_ec_csvs\\m_" + i + "\\ec_for_m_" + i + "_d_" + j + ".txt");
+                System.out.println(output_for_this_i_and_j.exists());
+                if (!overwrite_outputs && output_for_this_i_and_j.exists()) continue; // skip this i and j if output file already exists and overwrite is disabled
                 if (skipThisMAndD) {
                     System.out.printf("Previous iteration with m = %d, d = %d exceeded the %d second%s time limit.\n", i, j-1, max_seconds_allowed, plural(max_seconds_allowed));
                     jSkipToValue = d_limit - j;
@@ -96,6 +119,7 @@ public class Project {
 
         String filepath = "JC_code\\outputs\\";
         String filename = "m_" + m + "\\output_for_m_" + m + "_d_" + d + ".txt";
+        FileHelper.createFolderIfNotExist(new File(filepath), "m_" + m);
         File currentFile = new File(filepath + filename);
 
         // if allowing printing outputs IS allowed but overwriting existing output files IS NOT allowed, exception will be thrown for this m, d
@@ -103,7 +127,8 @@ public class Project {
             throw new ProjectException("overwrite_outputs disabled and printing to file enabled, while file for m = " + m + ", d = " + d + " already exists.");
         }
 
-        PrintWriter pw = new PrintWriter(filepath + "\\.misc\\default_output.txt"); // default output file
+        FileHelper.createFolderIfNotExist(new File(filepath), ".other");
+        PrintWriter pw = new PrintWriter(filepath + "\\.other\\default_output.txt"); // default output file
         if (print_outputs) {
             pw = new PrintWriter(currentFile);
         }
@@ -203,7 +228,25 @@ public class Project {
         // if (print_outputs) pw.println("\nBelow are debug outputs for each alpha in V whether it was put in the indecomposable set or the decomposable but no pairs set:");
         // if (print_outputs && no_pair_print_buffer.length() <= 200000) pw.println(no_pair_print_buffer.toString());
 
-        PrintWriter historyLog = new PrintWriter(new FileWriter("JC_code\\outputs\\.misc\\" + "log.txt", true));
+        if (printEC) {
+            if (exceptional_cycles.size() == 0) {
+                System.out.println("There are no Exceptional Cycles for m = " + m + ", d = " + d + ".");
+            } else {
+                System.out.println("Printing Exceptional Cycles output file for m = " + m + ", d = " + d + ": ");
+                String ec_filepath = "JC_code\\outputs_ec_csvs\\";
+                String ec_filename = "m_" + m + "\\ec_for_m_" + m + "_d_" + d + ".csv";
+                FileHelper.createFolderIfNotExist(new File(ec_filepath), "m_" + m);
+                File ec_currentFile = new File(ec_filepath + ec_filename);
+                if (!ec_currentFile.exists() || allowOverwrite) {
+                    PrintWriter ec_pw = new PrintWriter(ec_currentFile);
+                    long ec_line_count = print_exceptional_cycles_as_csv(exceptional_cycles, ec_pw);
+                    ec_pw.close();
+                    System.out.println(ec_line_count + " Exceptional Cycles are printed into the output file.");
+                }
+            }
+        }
+
+        PrintWriter historyLog = new PrintWriter(new FileWriter("JC_code\\outputs\\.other\\" + "log.txt", true));
         historyLog.println("Summary:");
         historyLog.println("given m = " + m + ", d = " + d);
         historyLog.println("Calculations took " + formattedElapsedTime + ".");
@@ -259,7 +302,7 @@ public class Project {
         int alpha_length = 2 * d;
         int[] this_combination = new int[alpha_length];
         if (validate_split_in_halves || check_tuple_sum) {
-            debugOutput = new PrintWriter(new FileWriter("JC_code\\outputs\\.misc\\" + "debug_output.txt", true));
+            debugOutput = new PrintWriter(new FileWriter("JC_code\\outputs\\.other\\" + "debug_output.txt", true));
             recursively_find_all_check_info(V_set, ZmmZ_star, m, this_combination, 0, 1, (alpha_length-2)/2+1);
             debugOutput.close();
         } else {
@@ -283,7 +326,7 @@ public class Project {
         int[] this_combination = new int[d];
         find_halves_recursively(firstHalves, inversed_sum_tuples_map, m, m_minus_one_divided_by_two, this_combination, 0, 1);
         
-        // PrintWriter pwTesting = new PrintWriter("JC_code\\outputs\\.misc\\testing.txt"); // TESTING
+        // PrintWriter pwTesting = new PrintWriter("JC_code\\outputs\\.other\\testing.txt"); // TESTING
 
         // pwTesting.println(firstHalves.size() + " " + inversed_sum_tuples_map.size()); // TESTING
         for (int i = 0; i < firstHalves.size(); i++) {
@@ -731,8 +774,20 @@ public class Project {
         );
     }
 
-    public static void print_to_standard_output() {
+    // public static void print_to_standard_output() {
         
+    // }
+
+    public static long print_exceptional_cycles_as_csv(Set<Tuple> exceptional_cycles, PrintWriter ec_pw) {
+        long lineCount = 0;
+        Set<Tuple> sorted_ec = new TreeSet<Tuple>(exceptional_cycles);
+        
+        for (Tuple alpha : sorted_ec) { // for each tuple in the sorted set
+            ec_pw.println(alpha.toCSV());
+            lineCount++;
+        }
+
+        return lineCount;
     }
 
     public static String redString(Object obj) {
@@ -770,7 +825,6 @@ public class Project {
         sb.append("\n}");
         return sb.toString();
     }
-
     
     public static String toString(int[] arr) throws ProjectException {
         return toString(arr, arr.length);
@@ -825,7 +879,7 @@ public class Project {
         return num == 1 ? "" : "s";
     }
 
-    static boolean isPrime(int n) {
+    public static boolean isPrime(int n) {
         if (n <= 1) return false;
 
         if (n == 2 || n == 3) return true;
@@ -839,6 +893,12 @@ public class Project {
         }
 
         return true;
+    }
+
+    public static boolean isPerfectSquare(int n) {
+        int root = (int) Math.sqrt(n);
+        if (root * root == n) return true;
+        return false;
     }
 
     /** Return the gcd of a and b using the euclidean algorithm
