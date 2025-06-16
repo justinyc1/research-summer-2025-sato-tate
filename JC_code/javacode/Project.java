@@ -41,10 +41,26 @@ public class Project {
 
         // test_all_m_and_d_combinations(63, 100, 1, 999, true, true, true, false, 1800, false, "halves", false, false); // 30 minutes "soft" limit (if reached, finish current then skip)
 
+        // test_all_m_and_d_combinations(
+        //     1, 
+        //     999, 
+        //     1, 
+        //     999, 
+        //     false, 
+        //     true, 
+        //     false, 
+        //     true, 
+        //     1800, 
+        //     false, 
+        //     "halves", 
+        //     false, 
+        //     false
+        // ); // 30 minutes "soft" limit (if reached, finish current then skip)
+
         test_all_m_and_d_combinations(
-            1, 
-            100, 
-            1, 
+            101, 
+            999, 
+            1,
             999, 
             false, 
             true, 
@@ -59,6 +75,9 @@ public class Project {
     }
 
     public static void test_all_m_and_d_combinations(int m_start, int m_end, int d_start, int d_end, boolean print_outputs, boolean automated, boolean overwrite_outputs, boolean print_exceptional_cycles, int max_seconds_allowed, boolean terminate_if_time_limit, String generate_method, boolean validate_halves, boolean check_sum) throws IOException {
+        
+        boolean only_check_m_and_d_with_indecomposables = true; // FOR SPECIAL m,d WITH INDECOMPOSABLE TUPLES
+        
         allowOverwrite = overwrite_outputs;
         printEC = print_exceptional_cycles;
         maxSecondsAllowed = max_seconds_allowed;
@@ -77,6 +96,7 @@ public class Project {
             int d_limit = (i-1)/2;
             int jSkipToValue = -1;
             for (int j = d_start; j <= d_limit && j <= d_end; ++j) {
+                if (only_check_m_and_d_with_indecomposables && j != (Math.sqrt(i)+1)/2) continue; // FOR SPECIAL m,d WITH INDECOMPOSABLE TUPLES
                 File output_for_this_i_and_j = new File("JC_code\\outputs_ec_csvs\\m_" + i + "\\ec_for_m_" + i + "_d_" + j + ".txt");
                 System.out.println(output_for_this_i_and_j.exists());
                 if (!overwrite_outputs && output_for_this_i_and_j.exists()) continue; // skip this i and j if output file already exists and overwrite is disabled
