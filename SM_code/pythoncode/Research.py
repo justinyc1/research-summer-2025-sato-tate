@@ -29,6 +29,10 @@ import math
 import time
 from itertools import combinations
 
+# for folder organization
+import re
+from pathlib import Path
+import shutil
 
 """
 This function computes the z mod m z star set given an m value. This set contains integers ranging from [1,m).
@@ -226,64 +230,79 @@ def indecomposable_set(m, d, no_pairs):
     # print("The number of tuple(s) is", len(tuple_list))
     return tuple_list
 
-
 def main():
     # Create a list of primes. This will be useful to loop through.
     list_of_primes = []
-    primes_file = open(r'C:\Users\sabee\PycharmProjects\research-spring-2025\SM_code\primes.txt', "r")
+    primes_file = open(r'C:\Users\sabee\PycharmProjects\research-summer-2025-sato-tate\SM_code\primes.txt', "r")
     for prime in primes_file:
         list_of_primes.append(int(prime))
 
     for p in list_of_primes:
         m = p**2
-        d = (p+1)/2
-        start_time = time.time()
-        save_path = r'C:\Users\sabee\PycharmProjects\research-spring-2025\SM_code\output'
-        filename = f"m_{m}_d_{d}_output.txt"
-        full_path = os.path.join(save_path, filename)
-        z_star = zmodmzstarset(m)
-        with open(full_path, "w") as file:
-            file.write(f"For m = {m} and d = {d}\n")
-            file.write(f"These are integers in the z mod m z star set for m = {m}\n {z_star}\n")
-        v_tuple_list = v_set(m, d, z_star)
-        e_tuple_list, no_pairs = e_set(m, v_tuple_list)
-        indecomposable_list = indecomposable_set(m, d, no_pairs)
-        end_time = time.time() - start_time
+        for d in range(1, ((m-1)//2)+1):
+            # d = (p+1)//2
+            start_time = time.time()
 
-        # PRINTING
-        with open(filename, "a") as file:
-            # PRINTING SUMMARY
-            file.write(f"The program took {end_time} seconds to complete.\n")
-            file.write(f"The number of tuple(s) in the V set is: {len(v_tuple_list)}\n")
-            file.write(f"The number of tuple(s) in the E set is: {len(e_tuple_list)}\n")
-            file.write(f"The number of tuple(s) with no pairs is: {len(no_pairs)}\n")
-            file.write(f"The number of indecomposable tuple(s) is: {len(indecomposable_list)}\n\n")
+            base_output_path = Path(r'C:\Users\sabee\PycharmProjects\research-summer-2025-sato-tate\SM_code\output\m_p_squared_output')
+            folder_name = f"m_{m}_output"
+            folder_path = base_output_path / folder_name
+            folder_path.mkdir(parents=True, exist_ok=True)  # Create folder if it doesn't exist
 
-            # PRINTING TUPLES
-            # V set
-            file.write(f"The tuples in the V set are:\n")
-            for x in v_tuple_list:
-                file.write(f"{x}\n")
-            file.write(f"The number of tuple(s) in the V set is: {len(v_tuple_list)}\n")
-            file.write(f"\n")
+            filename = f"m_{m}_d_{d}_output.txt"
+            full_path = folder_path / filename
 
-            # E set
-            file.write(f"The tuples in the E set are:\n")
-            for x in e_tuple_list:
-                file.write(f"{x}\n")
-            file.write(f"The number of tuple(s) in the E set is: {len(e_tuple_list)}\n")
 
-            # no pairs set
-            file.write(f"The tuples in the no pairs set are:\n")
-            for x in no_pairs:
-                file.write(f"{x}\n")
-            file.write(f"The number of tuple(s) in the no pairs set is: {len(no_pairs)}\n")
+            z_star = zmodmzstarset(m)
+            if os.path.exists(full_path):
+                print(f"Skipping m = {m}, d = {d} — file already exists.")
+                continue
 
-            # indecomposable set
-            file.write(f"The indecomposable tuples are:\n")
-            for x in indecomposable_list:
-                file.write(f"{x}\n")
-            file.write(f"The number of indecomposable tuple(s) is: {len(indecomposable_list)}\n")
+            with open(full_path, "w") as file:
+                file.write(f"For m = {m} and d = {d}\n")
+                file.write(f"These are integers in the z mod m z star set for m = {m}\n {z_star}\n")
+            v_tuple_list = v_set(m, d, z_star)
+            e_tuple_list, no_pairs = e_set(m, v_tuple_list)
+            indecomposable_list = indecomposable_set(m, d, no_pairs)
+            end_time = time.time() - start_time
+
+            # PRINTING
+            with open(full_path, "a") as file:
+                # PRINTING SUMMARY
+                file.write(f"The program took {end_time} seconds to complete.\n")
+                file.write(f"The number of tuple(s) in the V set is: {len(v_tuple_list)}\n")
+                file.write(f"The number of tuple(s) in the E set is: {len(e_tuple_list)}\n")
+                file.write(f"The number of tuple(s) with no pairs is: {len(no_pairs)}\n")
+                file.write(f"The number of indecomposable tuple(s) is: {len(indecomposable_list)}\n\n")
+
+                # PRINTING TUPLES
+                # V set
+                file.write(f"The tuples in the V set are:\n")
+                for x in v_tuple_list:
+                    file.write(f"{x}\n")
+                file.write(f"The number of tuple(s) in the V set is: {len(v_tuple_list)}\n")
+                file.write(f"\n")
+
+                # E set
+                file.write(f"The tuples in the E set are:\n")
+                for x in e_tuple_list:
+                    file.write(f"{x}\n")
+                file.write(f"The number of tuple(s) in the E set is: {len(e_tuple_list)}\n")
+                file.write(f"\n")
+
+                # no pairs set
+                file.write(f"The tuples in the no pairs set are:\n")
+                for x in no_pairs:
+                    file.write(f"{x}\n")
+                file.write(f"The number of tuple(s) in the no pairs set is: {len(no_pairs)}\n")
+                file.write(f"\n")
+
+                # indecomposable set
+                file.write(f"The indecomposable tuples are:\n")
+                for x in indecomposable_list:
+                    file.write(f"{x}\n")
+                file.write(f"The number of indecomposable tuple(s) is: {len(indecomposable_list)}\n")
+                file.write(f"\n")
+
 
 main()
 
