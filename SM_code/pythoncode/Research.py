@@ -233,7 +233,7 @@ def indecomposable_set(m, d, no_pairs):
 def main():
     # Create a list of primes. This will be useful to loop through.
     list_of_primes = []
-    primes_file = open(r'C:\Users\sabee\PycharmProjects\research-summer-2025-sato-tate\SM_code\primes.txt', "r")
+    primes_file = open(r'/SM_code/pythoncode/primes.txt', "r")
     for prime in primes_file:
         list_of_primes.append(int(prime))
 
