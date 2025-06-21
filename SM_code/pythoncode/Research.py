@@ -30,9 +30,7 @@ import time
 from itertools import combinations
 
 # for folder organization
-import re
 from pathlib import Path
-import shutil
 
 """
 This function computes the z mod m z star set given an m value. This set contains integers ranging from [1,m).
@@ -263,12 +261,12 @@ def main():
             v_tuple_list = v_set(m, d, z_star)
             e_tuple_list, no_pairs = e_set(m, v_tuple_list)
             indecomposable_list = indecomposable_set(m, d, no_pairs)
-            end_time = time.time() - start_time
+            total_time = time.time() - start_time
 
             # PRINTING
             with open(full_path, "a") as file:
                 # PRINTING SUMMARY
-                file.write(f"The program took {end_time} seconds to complete.\n")
+                file.write(f"The program took {total_time} seconds to complete.\n")
                 file.write(f"The number of tuple(s) in the V set is: {len(v_tuple_list)}\n")
                 file.write(f"The number of tuple(s) in the E set is: {len(e_tuple_list)}\n")
                 file.write(f"The number of tuple(s) with no pairs is: {len(no_pairs)}\n")
