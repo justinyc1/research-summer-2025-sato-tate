@@ -1,11 +1,12 @@
 """
 author -- Sabeeha Malikah
-date created -- 6/17/25
-last modified -- 6/20/25
+date created -- 6/23/25
+last modified -- 6/23/25
 description -- We noticed that for m = p^2 and d = (p+1)/2, the indecomposable tuples are the same tuples that are
                from Shioda's Lemma 5.5. This program will use the generalized equation to generate the necessary
                indecomposable tuples for m = p^2.
-updates --
+version -- This version generates the indecomposable tuples for all m values that satisfy m = p^2 for 2 < p < 1000.
+           The tuples generated are modified so that elements i: i > m+1/2 are written as i - m.
 
 """
 
@@ -24,7 +25,12 @@ def ind_tuple_generator(p, m):
             coeff = coeff + 1
         ind_tuple = ind_tuple + (m - (p*i),)
         ind_tuple = tuple(sorted(ind_tuple))
-        ind_tuple_list.append(ind_tuple)
+        new_tuple = tuple()
+        for n in ind_tuple:
+            if n > (m-1)/2:
+                n = n - m
+            new_tuple = new_tuple + (n,)
+        ind_tuple_list.append(new_tuple)
     return ind_tuple_list
 
 def main():
@@ -38,8 +44,8 @@ def main():
         m = p**2
         d = (p+1)//2
         start_time = time.time()
-        base_output_path = Path(r'C:\Users\sabee\PycharmProjects\research-summer-2025-sato-tate\SM_code\output\shioda_tuples_output')
-        filename = f"m_{m}_ind_output.txt"
+        base_output_path = Path(r'C:\Users\sabee\PycharmProjects\research-summer-2025-sato-tate\SM_code\output\formatted_shioda_tuples_output')
+        filename = f"m_{m}_ind_f_output.txt"
         full_path = base_output_path / filename
 
         if os.path.exists(full_path):
@@ -61,8 +67,7 @@ def main():
             # PRINTING TUPLES
             file.write("\nThe indecomposable tuples are:\n")
             for ind_tuple in ind_tuple_list:
-                file.write(f"{ind_tuple}\n")
-
+                file.write(f"{ind_tuple} -> max value: {max(ind_tuple, key=abs)}\n")
 
 
 main()
