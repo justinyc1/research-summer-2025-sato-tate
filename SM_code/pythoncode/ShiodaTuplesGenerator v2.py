@@ -44,7 +44,7 @@ def main():
         m = p**2
         d = (p+1)//2
         start_time = time.time()
-        base_output_path = Path(r'C:\Users\sabee\PycharmProjects\research-summer-2025-sato-tate\SM_code\output\formatted_shioda_tuples_output')
+        base_output_path = Path(r'/SM_code/output/modified_shioda_tuples_output')
         filename = f"m_{m}_ind_f_output.txt"
         full_path = base_output_path / filename
 
