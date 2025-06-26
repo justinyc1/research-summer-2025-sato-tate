@@ -47,6 +47,7 @@ def main():
                 for n in ind_tuple:
                     if n != max_value:
                         new_tuple = new_tuple + (-1*n,)
+                new_tuple = sorted(new_tuple)
                 file.write(f"{max_value} = {new_tuple}\n")
 
 main()
