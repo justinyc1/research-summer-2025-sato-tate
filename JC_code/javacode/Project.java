@@ -14,15 +14,16 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 
 public class Project {
+    // ===== base project flags =====
     static long startTimeInNano = -1;
     static int maxSecondsAllowed = -1; // in seconds, var <= 0 for no limit
     static boolean skipThisMAndD = false;
     static boolean terminateIfTimeLimit = false;
-    static boolean allowOverwrite = false;
     static boolean printEC = false;
     static String generateMethod = ""; // "recursion", "halves"
     static boolean validate_split_in_halves = false;
@@ -30,21 +31,18 @@ public class Project {
     static boolean check_tuple_sum = false;
     static int valid_tuple_sum_count = 0;
     static PrintWriter debugOutput = null;
+    // ===== shioda indecomposables flags =====
+    static boolean printNormal = false;
+    static boolean printModified = false;
+    static boolean printMax = false;
+    // ===== shared flags =====
+    static boolean allowOverwrite = false;
+
     public static void main(String[] args) throws ProjectException, IOException {
-        // test_all_m_and_d_combinations(1246, 1600, 2, 2, false, true, false, false, -1, false, "halves", false, false);
-        // test_all_m_and_d_combinations(51, 51, 11, 15, false, true, false, false, -1, false, "halves", false, false);
-        // test_all_m_and_d_combinations(51, 51, 16, 16, false, true, false, false, -1, false, "halves", false, false);
-        // test_all_m_and_d_combinations(2883, 3600, 2, 2, false, true, false, false, -1, false, "halves", false, false);
-        // test_all_m_and_d_combinations(49, 49, 11, 999, false, true, false, false, -1, false, "halves", false, false);
-
-        // test_all_m_and_d_combinations(49, 49, 11, 999, true, true, true, false, -1, false, "halves", false, false);
-
-        // test_all_m_and_d_combinations(63, 100, 1, 999, true, true, true, false, 1800, false, "halves", false, false); // 30 minutes "soft" limit (if reached, finish current then skip)
-
         // test_all_m_and_d_combinations(
-        //     1, 
+        //     101, 
         //     999, 
-        //     1, 
+        //     1,
         //     999, 
         //     false, 
         //     true, 
@@ -57,21 +55,125 @@ public class Project {
         //     false
         // ); // 30 minutes "soft" limit (if reached, finish current then skip)
 
-        test_all_m_and_d_combinations(
-            101, 
-            999, 
-            1,
-            999, 
-            false, 
+        generate_shioda_indecomposables(
+            3, 
+            2000, 
             true, 
-            false, 
             true, 
-            1800, 
-            false, 
-            "halves", 
-            false, 
+            true,
             false
-        ); // 30 minutes "soft" limit (if reached, finish current then skip)
+        );
+    }
+
+    public static void generate_shioda_indecomposables(int p_start, int p_end, boolean print_normal, boolean print_modified, boolean print_max, boolean overwrite_outputs) throws ProjectException, FileNotFoundException {
+        if (p_start < 3) throw new ProjectException("The minimum starting p value is 3.");
+        
+        printNormal = print_normal;
+        printModified = print_modified;
+        printMax = print_max;
+        allowOverwrite = overwrite_outputs;
+
+        if (printNormal) FileHelper.createFolderIfNotExist(new File("JC_code\\outputs"), "indecomposable_csvs");
+        if (printModified) FileHelper.createFolderIfNotExist(new File("JC_code\\outputs"), "indecomposable_modified_csvs");
+        if (printMax) FileHelper.createFolderIfNotExist(new File("JC_code\\outputs"), "indecomposable_max_csvs");
+
+        for (int p = p_start; p <= p_end; p++) {
+            if (p % 2 == 0) continue; // odd p only
+
+            get_and_print_shioda_indecomposables(p);
+        }
+    }
+
+    public static Set<Tuple> get_and_print_shioda_indecomposables(int p) throws FileNotFoundException, ProjectException {
+        return get_and_print_shioda_indecomposables(
+            p, // int p
+            p*p, // int m
+            (p+1)/2 // int d
+        );
+    }
+
+    public static Set<Tuple> get_and_print_shioda_indecomposables(int m, int d) throws FileNotFoundException, ProjectException {
+        return get_and_print_shioda_indecomposables(
+            (d*2)-1, // int p
+            m, // int m
+            d // int d
+        );
+    }
+
+    public static Set<Tuple> get_and_print_shioda_indecomposables(int p, int m, int d) throws FileNotFoundException, ProjectException {
+        int size = 2 * d;
+        HashSet<Tuple> indecomposableTuples = new HashSet<>();
+
+        int left = p / 100 * 100;
+        int right = left + 100;
+
+        String fileroot_normal = "JC_code\\outputs\\indecomposable_csvs";
+        String fileroot_modified = "JC_code\\outputs\\indecomposable_modified_csvs";
+        String fileroot_max = "JC_code\\outputs\\indecomposable_max_csvs";
+
+        String filepath = "p_" + left + "_to_" + right + "";
+        String filename = "p_" + p + "_m_" + m + "_d_" + d + ".csv";
+
+        if (printNormal) FileHelper.createFolderIfNotExist(new File(fileroot_normal), filepath);
+        if (printModified) FileHelper.createFolderIfNotExist(new File(fileroot_modified), filepath);
+        if (printMax) FileHelper.createFolderIfNotExist(new File(fileroot_max), filepath);
+        
+        File file_normal = null;
+        File file_modified = null;
+        File file_max = null;
+
+        PrintWriter pw_normal = null;
+        PrintWriter pw_modified = null;
+        PrintWriter pw_max = null;
+
+        if (printNormal) file_normal = new File(fileroot_normal + "\\" + filepath + "\\" + filename);
+        if (printModified) file_modified = new File(fileroot_modified + "\\" + filepath + "\\" + filename);
+        if (printMax) file_max = new File(fileroot_max + "\\" + filepath + "\\" + filename);
+
+        if (printNormal && (allowOverwrite || !file_normal.exists())) pw_normal = new PrintWriter(file_normal);
+        if (printModified && (allowOverwrite || !file_normal.exists())) pw_modified = new PrintWriter(file_modified);
+        if (printMax && (allowOverwrite || !file_normal.exists())) pw_max = new PrintWriter(file_max);
+        
+        for (int i = 1; i < p; i++) {
+            int[] arr = new int[size];
+
+            // first
+            arr[0] = i;
+
+            // 2nd to 2nd last
+            for (int j = 1; j < size - 1; j++) { 
+                arr[j] = i + j * p;
+            }
+            
+            // last
+            arr[size - 1] = m - (p * i); 
+
+            Arrays.sort(arr);
+            Tuple tuple = new Tuple(arr);
+
+            indecomposableTuples.add(tuple);
+
+            if (printNormal && (allowOverwrite || !file_normal.exists())) pw_normal.println(tuple.toCSV());
+            
+            if (!printModified && !printMax) continue;
+
+            // either printModified or printMax: modify the arr
+            int m_half_floored = m/2;
+            for (int j = 0; j < size; j++) {
+                if (arr[j] > m_half_floored) arr[j] -= m;
+            }
+            tuple = new Tuple(arr);
+
+            if (printModified && (allowOverwrite || !file_normal.exists())) pw_modified.println(tuple.toCSV());
+            
+            if (printMax && (allowOverwrite || !file_normal.exists())) pw_max.println(tuple.toCSV() + ",MAX=" + (Math.abs(arr[size/2-1]) > Math.abs(arr[size/2]) ? arr[size/2-1] : arr[size/2]));
+        }
+
+        if (printNormal) pw_normal.close();
+        if (printModified) pw_modified.close();
+        if (printMax) pw_max.close();
+
+        return indecomposableTuples;
     }
 
     public static void test_all_m_and_d_combinations(int m_start, int m_end, int d_start, int d_end, boolean print_outputs, boolean automated, boolean overwrite_outputs, boolean print_exceptional_cycles, int max_seconds_allowed, boolean terminate_if_time_limit, String generate_method, boolean validate_halves, boolean check_sum) throws IOException {
@@ -137,7 +239,7 @@ public class Project {
         
         validate_m_and_d(m, d);
 
-        String filepath = "JC_code\\outputs\\";
+        String filepath = "JC_code\\outputs\\summaries\\";
         String filename = "m_" + m + "\\output_for_m_" + m + "_d_" + d + ".txt";
         FileHelper.createFolderIfNotExist(new File(filepath), "m_" + m);
         File currentFile = new File(filepath + filename);
@@ -253,20 +355,20 @@ public class Project {
                 System.out.println("There are no Exceptional Cycles for m = " + m + ", d = " + d + ".");
             } else {
                 System.out.println("Printing Exceptional Cycles output file for m = " + m + ", d = " + d + ": ");
-                String ec_filepath = "JC_code\\outputs_ec_csvs\\";
+                String ec_filepath = "JC_code\\outputs\\exceptional_cycle_csvs\\";
                 String ec_filename = "m_" + m + "\\ec_for_m_" + m + "_d_" + d + ".csv";
                 FileHelper.createFolderIfNotExist(new File(ec_filepath), "m_" + m);
                 File ec_currentFile = new File(ec_filepath + ec_filename);
                 if (!ec_currentFile.exists() || allowOverwrite) {
                     PrintWriter ec_pw = new PrintWriter(ec_currentFile);
-                    long ec_line_count = print_exceptional_cycles_as_csv(exceptional_cycles, ec_pw);
+                    long ec_line_count = print_tuples_as_csv(exceptional_cycles, ec_pw, true);
                     ec_pw.close();
                     System.out.println(ec_line_count + " Exceptional Cycles are printed into the output file.");
                 }
             }
         }
 
-        PrintWriter historyLog = new PrintWriter(new FileWriter("JC_code\\outputs\\.other\\" + "log.txt", true));
+        PrintWriter historyLog = new PrintWriter(new FileWriter("JC_code\\outputs\\summaries\\.other\\" + "log.txt", true));
         historyLog.println("Summary:");
         historyLog.println("given m = " + m + ", d = " + d);
         historyLog.println("Calculations took " + formattedElapsedTime + ".");
@@ -322,7 +424,7 @@ public class Project {
         int alpha_length = 2 * d;
         int[] this_combination = new int[alpha_length];
         if (validate_split_in_halves || check_tuple_sum) {
-            debugOutput = new PrintWriter(new FileWriter("JC_code\\outputs\\.other\\" + "debug_output.txt", true));
+            debugOutput = new PrintWriter(new FileWriter("JC_code\\outputs\\summaries\\.other\\" + "debug_output.txt", true));
             recursively_find_all_check_info(V_set, ZmmZ_star, m, this_combination, 0, 1, (alpha_length-2)/2+1);
             debugOutput.close();
         } else {
@@ -346,7 +448,7 @@ public class Project {
         int[] this_combination = new int[d];
         find_halves_recursively(firstHalves, inversed_sum_tuples_map, m, m_minus_one_divided_by_two, this_combination, 0, 1);
         
-        // PrintWriter pwTesting = new PrintWriter("JC_code\\outputs\\.other\\testing.txt"); // TESTING
+        // PrintWriter pwTesting = new PrintWriter("JC_code\\outputs\\summaries\\.other\\testing.txt"); // TESTING
 
         // pwTesting.println(firstHalves.size() + " " + inversed_sum_tuples_map.size()); // TESTING
         for (int i = 0; i < firstHalves.size(); i++) {
@@ -798,18 +900,18 @@ public class Project {
         
     // }
 
-    public static long print_exceptional_cycles_as_csv(Set<Tuple> exceptional_cycles, PrintWriter ec_pw) {
-        long lineCount = 0;
-        Set<Tuple> sorted_ec = new TreeSet<Tuple>(exceptional_cycles);
+    public static long print_tuples_as_csv(Set<Tuple> tuples, PrintWriter pw, boolean sort) {
+        long line_count = 0;
+        if (sort) tuples = new TreeSet<Tuple>(tuples);
         
-        for (Tuple alpha : sorted_ec) { // for each tuple in the sorted set
-            ec_pw.println(alpha.toCSV());
-            lineCount++;
+        for (Tuple alpha : tuples) { // for each tuple in the (possibly sorted) set
+            pw.println(alpha.toCSV());
+            line_count++;
         }
 
-        return lineCount;
+        return line_count;
     }
-
+    
     public static String redString(Object obj) {
         String str = "";
         if (obj instanceof String) str = obj.toString();

@@ -92,6 +92,15 @@ public class FileHelper {
         return sb.toString();
     }
 
+    public static int pOf(File file) {
+        String filename = file.getName();
+        if (!filename.contains("output")) {
+            return -1;
+        }
+        filename = filename.substring(filename.indexOf("p_") + 2, filename.indexOf("_m_"));
+        return Integer.parseInt(filename);
+    }
+
     public static int mOf(File file) {
         String filename = file.getName();
         if (!filename.contains("output")) {
