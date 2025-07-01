@@ -79,6 +79,7 @@ public class Project {
 
         for (int p = p_start; p <= p_end; p++) {
             if (p % 2 == 0) continue; // odd p only
+            if (!isPrime(p)) continue; // prime p only
 
             get_and_print_shioda_indecomposables(p);
         }

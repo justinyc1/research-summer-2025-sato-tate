@@ -1,7 +1,7 @@
 package JC_code.javacode;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /** Tuple: A collection of elements that is: finite, ordered, immutable, fixed-length, allows repetition, and of type integer
  */
@@ -112,6 +112,23 @@ public class Tuple implements Comparable<Tuple> {
         return null;
     }
 
+    /**
+     * 
+     * @param remove - the element to be removed from the new Tuple
+     * @return - a new Tuple without "remove"
+     */
+    public Tuple getNewTupleWithout(int remove) {
+        int n = this.elements.length;
+        int size = 0;
+        Tuple result = new Tuple(n-1);
+        for (int i = 0; i < n; i++) { // for all elements
+            if (this.elements[i] == remove) continue; // ignore the element to be removed
+            result.elements[size] = this.elements[i]; // add all other elements to new tuple
+            size++; 
+        }
+        return result;
+    }
+
     /** Create a new Tuple of size = sum of input Tuples. Copy into the new Tuple in O(n) time
      * 
      * @param other
@@ -133,7 +150,7 @@ public class Tuple implements Comparable<Tuple> {
      *  
      *  A Tuple is considered inversed when each element is subtracted from m, and is listed in ascending order.
      * 
-     *  i.e. m = 17, d = 4: (1, 2, 3, 5) -> (17-5, 17-3, 17-2, 17-1) = (12, 14, 15, 16)
+     *  i.e. m = 17, d = 2: (1, 2, 3, 5) -> (17-5, 17-3, 17-2, 17-1) = (12, 14, 15, 16)
      *  
      * @return a new Tuple that is inversed by m.
      */
@@ -146,6 +163,22 @@ public class Tuple implements Comparable<Tuple> {
         return result;
     }
 
+        /** Subtract a Tuple's entries by subtracting m, if it is greater than m/2.
+     *  
+     *  i.e. m = 9, d = 2: (1, 4, 6, 7) -> (1, 4, 6-9, 7-9) = (1,4,-3,-2)
+     *  
+     * @return a new Tuple with modified entries if it is greater than m/2.
+     */
+    public Tuple subtract_m_if_above_m_halved(int m) {
+        int n = this.elements.length;
+        int m_halved = m/2;
+        Tuple result = new Tuple(n);
+        for (int i = 0; i < n; i++) { // for each element in the given tuple
+            result.elements[i] = this.elements[i] <= m_halved ? this.elements[i] : this.elements[i] - m;
+        }
+        return result;
+    }
+
     /**Uses indexOf(), which implements binary search, to check if key exist in Tuple. (Tuple MUST be sorted in non-descending order)
      * 
      * @param key value to check if it exist in tuple
@@ -153,7 +186,7 @@ public class Tuple implements Comparable<Tuple> {
      */
     public boolean contains(int key) {
         int index = this.indexOf(key);
-        return index == -1 ? false : true; 
+        return index != -1; 
     }
 
     /**Uses binary search to find the index of key in O(log n) time. (Tuple MUST be sorted in non-descending order)
