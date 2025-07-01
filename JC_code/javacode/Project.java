@@ -57,7 +57,7 @@ public class Project {
 
         generate_shioda_indecomposables(
             3, 
-            2000, // could go higher, but would take a lot of storage
+            1000, // could go higher, but would take a lot of storage
             true, 
             true, 
             true,
@@ -131,8 +131,8 @@ public class Project {
         if (printMax) file_max = new File(fileroot_max + "\\" + filepath + "\\" + filename);
 
         if (printNormal && (allowOverwrite || !file_normal.exists())) pw_normal = new PrintWriter(file_normal);
-        if (printModified && (allowOverwrite || !file_normal.exists())) pw_modified = new PrintWriter(file_modified);
-        if (printMax && (allowOverwrite || !file_normal.exists())) pw_max = new PrintWriter(file_max);
+        if (printModified && (allowOverwrite || !file_modified.exists())) pw_modified = new PrintWriter(file_modified);
+        if (printMax && (allowOverwrite || !file_max.exists())) pw_max = new PrintWriter(file_max);
         
         for (int i = 1; i < p; i++) {
             int[] arr = new int[size];
@@ -153,8 +153,7 @@ public class Project {
 
             indecomposableTuples.add(tuple);
 
-            if (printNormal && (allowOverwrite || !file_normal.exists())) pw_normal.println(tuple.toCSV());
-            
+            if (printNormal && (allowOverwrite || pw_normal != null)) pw_normal.println(tuple.toCSV());
             if (!printModified && !printMax) continue;
 
             // either printModified or printMax: modify the arr
@@ -164,9 +163,9 @@ public class Project {
             }
             tuple = new Tuple(arr);
 
-            if (printModified && (allowOverwrite || !file_normal.exists())) pw_modified.println(tuple.toCSV());
+            if (printModified && (allowOverwrite || pw_modified != null)) pw_modified.println(tuple.toCSV());
             
-            if (printMax && (allowOverwrite || !file_normal.exists())) pw_max.println(tuple.toCSV() + ",MAX=" + (Math.abs(arr[size/2-1]) > Math.abs(arr[size/2]) ? arr[size/2-1] : arr[size/2]));
+            if (printMax && (allowOverwrite || pw_max != null)) pw_max.println(tuple.toCSV() + ",MAX=" + (Math.abs(arr[size/2-1]) > Math.abs(arr[size/2]) ? arr[size/2-1] : arr[size/2]));
         }
 
         if (printNormal && pw_normal != null) pw_normal.close();
