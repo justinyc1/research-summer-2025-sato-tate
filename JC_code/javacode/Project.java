@@ -57,7 +57,7 @@ public class Project {
 
         generate_shioda_indecomposables(
             3, 
-            2000, 
+            2000, // could go higher, but would take a lot of storage
             true, 
             true, 
             true,
@@ -169,9 +169,9 @@ public class Project {
             if (printMax && (allowOverwrite || !file_normal.exists())) pw_max.println(tuple.toCSV() + ",MAX=" + (Math.abs(arr[size/2-1]) > Math.abs(arr[size/2]) ? arr[size/2-1] : arr[size/2]));
         }
 
-        if (printNormal) pw_normal.close();
-        if (printModified) pw_modified.close();
-        if (printMax) pw_max.close();
+        if (printNormal && pw_normal != null) pw_normal.close();
+        if (printModified && pw_modified != null) pw_modified.close();
+        if (printMax && pw_max != null) pw_max.close();
 
         return indecomposableTuples;
     }
