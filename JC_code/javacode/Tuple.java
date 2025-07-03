@@ -37,6 +37,18 @@ public class Tuple implements Comparable<Tuple> {
         }
     }
 
+    /** Create a deep copy of the given tuple
+     * 
+     * @param other - the tuple to create a deep copy of
+     */
+    public Tuple(Tuple other) {
+        int n = other.elements.length;
+        this.elements = new int[n];
+        for (int i = 0; i < n; i++) {
+            this.elements[i] = other.elements[i];
+        }
+    }
+
     /** Get the capacity/length of the tuple
      * 
      * @return the capacity/length of the tuple
@@ -67,6 +79,36 @@ public class Tuple implements Comparable<Tuple> {
             sum += elements[i]; 
         }
         return sum;
+    }
+
+    /** Iterate through the tuple and track the max
+     * 
+     * @return
+     */
+    public int getMax() {
+        int max = this.elements[0];
+        int n = this.elements.length;
+        for (int i = 1; i < n; i++) {
+            if (this.elements[i] > max) {
+                max = this.elements[i];
+            }
+        }
+        return max;
+    }
+
+    /** Iterate through the tuple and track the absolute max
+     * 
+     * @return
+     */
+    public int getAbsoluteMax() {
+        int absoluteMax = this.elements[0];
+        int n = this.elements.length;
+        for (int i = 1; i < n; i++) {
+            if (Math.abs(this.elements[i]) > Math.abs(absoluteMax)) {
+                absoluteMax = this.elements[i];
+            }
+        }
+        return absoluteMax;
     }
 
     /** Return a subtuple starting at index start (inclusive) until index end (exclusive)
@@ -102,7 +144,7 @@ public class Tuple implements Comparable<Tuple> {
             if (nextTuple.get(i) >= this.get(m-(n-1-i)-1)) { // if ith last of next tuple is same or greater than ith of tuple
                 continue;
             }
-            int index = this.indexOf(subtuple.get(i)); // find index in tuple of value so get to the 'next' subtuple
+            int index = this.indexOfSorted(subtuple.get(i)); // find index in tuple of value so get to the 'next' subtuple
             nextTuple.set(i, this.elements[index+1]);
             for (int j = i + 1; j < n; ++j) { // update subsequent elements to the lowest possible after the 'current' element
                 nextTuple.set(j, this.elements[index+(j-(i+1))+2]);
@@ -112,7 +154,7 @@ public class Tuple implements Comparable<Tuple> {
         return null;
     }
 
-    /**
+    /** Get a new tuple without the element "remove" 
      * 
      * @param remove - the element to be removed from the new Tuple
      * @return - a new Tuple without "remove"
@@ -179,13 +221,13 @@ public class Tuple implements Comparable<Tuple> {
         return result;
     }
 
-    /**Uses indexOf(), which implements binary search, to check if key exist in Tuple. (Tuple MUST be sorted in non-descending order)
+    /**Uses indexOfSorted(), which implements binary search, to check if key exist in Tuple. (Tuple MUST be sorted in non-descending order)
      * 
      * @param key value to check if it exist in tuple
      * @return true if key is in the tuple, false otherwise
      */
     public boolean contains(int key) {
-        int index = this.indexOf(key);
+        int index = this.indexOfSorted(key);
         return index != -1; 
     }
 
@@ -194,7 +236,7 @@ public class Tuple implements Comparable<Tuple> {
      * @param key value to find the index of
      * @return index of key, or -1 if key is not in the tuple
      */
-    public int indexOf(int key) {
+    public int indexOfSorted(int key) {
         int low = 0;
         int high = this.elements.length - 1;
         while (low <= high) {
