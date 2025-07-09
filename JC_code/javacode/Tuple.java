@@ -1,7 +1,7 @@
 package JC_code.javacode;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /** Tuple: A collection of elements that is: finite, ordered, immutable, fixed-length, allows repetition, and of type integer
  */
@@ -37,6 +37,18 @@ public class Tuple implements Comparable<Tuple> {
         }
     }
 
+    /** Create a deep copy of the given tuple
+     * 
+     * @param other - the tuple to create a deep copy of
+     */
+    public Tuple(Tuple other) {
+        int n = other.elements.length;
+        this.elements = new int[n];
+        for (int i = 0; i < n; i++) {
+            this.elements[i] = other.elements[i];
+        }
+    }
+
     /** Get the capacity/length of the tuple
      * 
      * @return the capacity/length of the tuple
@@ -67,6 +79,36 @@ public class Tuple implements Comparable<Tuple> {
             sum += elements[i]; 
         }
         return sum;
+    }
+
+    /** Iterate through the tuple and track the max
+     * 
+     * @return
+     */
+    public int getMax() {
+        int max = this.elements[0];
+        int n = this.elements.length;
+        for (int i = 1; i < n; i++) {
+            if (this.elements[i] > max) {
+                max = this.elements[i];
+            }
+        }
+        return max;
+    }
+
+    /** Iterate through the tuple and track the absolute max
+     * 
+     * @return
+     */
+    public int getAbsoluteMax() {
+        int absoluteMax = this.elements[0];
+        int n = this.elements.length;
+        for (int i = 1; i < n; i++) {
+            if (Math.abs(this.elements[i]) > Math.abs(absoluteMax)) {
+                absoluteMax = this.elements[i];
+            }
+        }
+        return absoluteMax;
     }
 
     /** Return a subtuple starting at index start (inclusive) until index end (exclusive)
@@ -102,7 +144,7 @@ public class Tuple implements Comparable<Tuple> {
             if (nextTuple.get(i) >= this.get(m-(n-1-i)-1)) { // if ith last of next tuple is same or greater than ith of tuple
                 continue;
             }
-            int index = this.indexOf(subtuple.get(i)); // find index in tuple of value so get to the 'next' subtuple
+            int index = this.indexOfSorted(subtuple.get(i)); // find index in tuple of value so get to the 'next' subtuple
             nextTuple.set(i, this.elements[index+1]);
             for (int j = i + 1; j < n; ++j) { // update subsequent elements to the lowest possible after the 'current' element
                 nextTuple.set(j, this.elements[index+(j-(i+1))+2]);
@@ -110,6 +152,23 @@ public class Tuple implements Comparable<Tuple> {
             return new Tuple(nextTuple);
         }
         return null;
+    }
+
+    /** Get a new tuple without the element "remove" 
+     * 
+     * @param remove - the element to be removed from the new Tuple
+     * @return - a new Tuple without "remove"
+     */
+    public Tuple getNewTupleWithout(int remove) {
+        int n = this.elements.length;
+        int size = 0;
+        Tuple result = new Tuple(n-1);
+        for (int i = 0; i < n; i++) { // for all elements
+            if (this.elements[i] == remove) continue; // ignore the element to be removed
+            result.elements[size] = this.elements[i]; // add all other elements to new tuple
+            size++; 
+        }
+        return result;
     }
 
     /** Create a new Tuple of size = sum of input Tuples. Copy into the new Tuple in O(n) time
@@ -133,7 +192,7 @@ public class Tuple implements Comparable<Tuple> {
      *  
      *  A Tuple is considered inversed when each element is subtracted from m, and is listed in ascending order.
      * 
-     *  i.e. m = 17, d = 4: (1, 2, 3, 5) -> (17-5, 17-3, 17-2, 17-1) = (12, 14, 15, 16)
+     *  i.e. m = 17, d = 2: (1, 2, 3, 5) -> (17-5, 17-3, 17-2, 17-1) = (12, 14, 15, 16)
      *  
      * @return a new Tuple that is inversed by m.
      */
@@ -146,14 +205,30 @@ public class Tuple implements Comparable<Tuple> {
         return result;
     }
 
-    /**Uses indexOf(), which implements binary search, to check if key exist in Tuple. (Tuple MUST be sorted in non-descending order)
+        /** Subtract a Tuple's entries by subtracting m, if it is greater than m/2.
+     *  
+     *  i.e. m = 9, d = 2: (1, 4, 6, 7) -> (1, 4, 6-9, 7-9) = (1,4,-3,-2)
+     *  
+     * @return a new Tuple with modified entries if it is greater than m/2.
+     */
+    public Tuple subtract_m_if_above_m_halved(int m) {
+        int n = this.elements.length;
+        int m_halved = m/2;
+        Tuple result = new Tuple(n);
+        for (int i = 0; i < n; i++) { // for each element in the given tuple
+            result.elements[i] = this.elements[i] <= m_halved ? this.elements[i] : this.elements[i] - m;
+        }
+        return result;
+    }
+
+    /**Uses indexOfSorted(), which implements binary search, to check if key exist in Tuple. (Tuple MUST be sorted in non-descending order)
      * 
      * @param key value to check if it exist in tuple
      * @return true if key is in the tuple, false otherwise
      */
     public boolean contains(int key) {
-        int index = this.indexOf(key);
-        return index == -1 ? false : true; 
+        int index = this.indexOfSorted(key);
+        return index != -1; 
     }
 
     /**Uses binary search to find the index of key in O(log n) time. (Tuple MUST be sorted in non-descending order)
@@ -161,7 +236,7 @@ public class Tuple implements Comparable<Tuple> {
      * @param key value to find the index of
      * @return index of key, or -1 if key is not in the tuple
      */
-    public int indexOf(int key) {
+    public int indexOfSorted(int key) {
         int low = 0;
         int high = this.elements.length - 1;
         while (low <= high) {
