@@ -32,10 +32,12 @@ public class Project {
     static int valid_tuple_sum_count = 0;
     static PrintWriter debugOutput = null;
     // ===== shioda indecomposables flags =====
+    static boolean firstHalfOnly = false;
     static boolean printNormal = false;
     static boolean printModified = false;
     static boolean printMax = false;
-    static boolean printRelations = false;
+    static boolean printMaxRelation = false;
+    static boolean printModifiedWithoutMax = false;
     // ===== shared flags =====
     static boolean allowOverwrite = false;
 
@@ -59,6 +61,8 @@ public class Project {
         generate_shioda_indecomposables(
             3, 
             1000, // could go higher, but would take a lot of storage
+            false,
+            true,
             true, 
             true, 
             true,
@@ -67,45 +71,48 @@ public class Project {
         );
     }
 
-    public static void generate_shioda_indecomposables(int p_start, int p_end, boolean print_normal, boolean print_modified, boolean print_max, boolean print_relations, boolean overwrite_outputs) throws ProjectException, FileNotFoundException {
+    public static void generate_shioda_indecomposables(int p_start, int p_end, boolean overwrite_outputs, boolean first_half_only, boolean print_normal, boolean print_modified, boolean print_max, boolean print_max_relation, boolean print_modified_without_max) throws ProjectException, FileNotFoundException {
         if (p_start < 3) throw new ProjectException("The minimum starting p value is 3.");
         
+        firstHalfOnly = first_half_only;
+        allowOverwrite = overwrite_outputs;
         printNormal = print_normal;
         printModified = print_modified;
         printMax = print_max;
-        printRelations = print_relations;
-        allowOverwrite = overwrite_outputs;
+        printMaxRelation = print_max_relation;
+        printModifiedWithoutMax = print_modified_without_max;
 
         if (printNormal) FileHelper.createFolderIfNotExist(new File("JC_code\\outputs"), "indecomposable_csvs");
         if (printModified) FileHelper.createFolderIfNotExist(new File("JC_code\\outputs"), "indecomposable_modified_csvs");
         if (printMax) FileHelper.createFolderIfNotExist(new File("JC_code\\outputs"), "indecomposable_max_csvs");
-        if (printRelations) FileHelper.createFolderIfNotExist(new File("JC_code\\outputs"), "relation_csvs");
+        if (printMaxRelation) FileHelper.createFolderIfNotExist(new File("JC_code\\outputs"), "max_relation_csvs");
+        if (printModifiedWithoutMax) FileHelper.createFolderIfNotExist(new File("JC_code\\outputs"), "modified_without_max_csvs");
 
         for (int p = p_start; p <= p_end; p++) {
             if (p % 2 == 0) continue; // odd p only
             if (!isPrime(p)) continue; // prime p only
 
-            get_and_print_shioda_indecomposables(p);
+            get_and_output_shioda_indecomposables(p);
         }
     }
 
-    public static Set<Tuple> get_and_print_shioda_indecomposables(int p) throws FileNotFoundException, ProjectException {
-        return get_and_print_shioda_indecomposables(
+    public static Set<Tuple> get_and_output_shioda_indecomposables(int p) throws FileNotFoundException, ProjectException {
+        return get_and_output_shioda_indecomposables(
             p, // int p
             p*p, // int m
             (p+1)/2 // int d
         );
     }
 
-    public static Set<Tuple> get_and_print_shioda_indecomposables(int m, int d) throws FileNotFoundException, ProjectException {
-        return get_and_print_shioda_indecomposables(
+    public static Set<Tuple> get_and_output_shioda_indecomposables(int m, int d) throws FileNotFoundException, ProjectException {
+        return get_and_output_shioda_indecomposables(
             (d*2)-1, // int p
             m, // int m
             d // int d
         );
     }
 
-    public static Set<Tuple> get_and_print_shioda_indecomposables(int p, int m, int d) throws FileNotFoundException, ProjectException {
+    public static Set<Tuple> get_and_output_shioda_indecomposables(int p, int m, int d) throws FileNotFoundException, ProjectException {
         int size = 2 * d;
         HashSet<Tuple> indecomposableTuples = new HashSet<>();
 
@@ -115,7 +122,8 @@ public class Project {
         String fileroot_normal = "JC_code\\outputs\\indecomposable_csvs";
         String fileroot_modified = "JC_code\\outputs\\indecomposable_modified_csvs";
         String fileroot_max = "JC_code\\outputs\\indecomposable_max_csvs";
-        String fileroot_relations = "JC_code\\outputs\\relation_csvs";
+        String fileroot_max_relation = "JC_code\\outputs\\max_relation_csvs";
+        String fileroot_without_max = "JC_code\\outputs\\modified_without_max_csvs";
 
         String filepath = "p_" + left + "_to_" + right + "";
         String filename = "p_" + p + "_m_" + m + "_d_" + d + ".csv";
@@ -123,29 +131,36 @@ public class Project {
         if (printNormal) FileHelper.createFolderIfNotExist(new File(fileroot_normal), filepath);
         if (printModified) FileHelper.createFolderIfNotExist(new File(fileroot_modified), filepath);
         if (printMax) FileHelper.createFolderIfNotExist(new File(fileroot_max), filepath);
-        if (printRelations) FileHelper.createFolderIfNotExist(new File(fileroot_relations), filepath);
+        if (printMaxRelation) FileHelper.createFolderIfNotExist(new File(fileroot_max_relation), filepath);
+        if (printModifiedWithoutMax) FileHelper.createFolderIfNotExist(new File(fileroot_without_max), filepath);
         
         File file_normal = null;
         File file_modified = null;
         File file_max = null;
-        File file_relations = null;
+        File file_max_relation = null;
+        File file_without_max = null;
 
         PrintWriter pw_normal = null;
         PrintWriter pw_modified = null;
         PrintWriter pw_max = null;
-        PrintWriter pw_relations = null;
+        PrintWriter pw_max_relation = null;
+        PrintWriter pw_without_max = null;
 
         if (printNormal) file_normal = new File(fileroot_normal + "\\" + filepath + "\\" + filename);
         if (printModified) file_modified = new File(fileroot_modified + "\\" + filepath + "\\" + filename);
         if (printMax) file_max = new File(fileroot_max + "\\" + filepath + "\\" + filename);
-        if (printRelations) file_relations = new File(fileroot_relations + "\\" + filepath + "\\" + filename);
+        if (printMaxRelation) file_max_relation = new File(fileroot_max_relation + "\\" + filepath + "\\" + filename);
+        if (printModifiedWithoutMax) file_without_max = new File(fileroot_without_max + "\\" + filepath + "\\" + filename);
 
         if (printNormal && (allowOverwrite || !file_normal.exists())) pw_normal = new PrintWriter(file_normal);
         if (printModified && (allowOverwrite || !file_modified.exists())) pw_modified = new PrintWriter(file_modified);
         if (printMax && (allowOverwrite || !file_max.exists())) pw_max = new PrintWriter(file_max);
-        if (printRelations && (allowOverwrite || !file_relations.exists())) pw_relations = new PrintWriter(file_relations);
+        if (printMaxRelation && (allowOverwrite || !file_max_relation.exists())) pw_max_relation = new PrintWriter(file_max_relation);
+        if (printModifiedWithoutMax && (allowOverwrite || !file_without_max.exists())) pw_without_max = new PrintWriter(file_without_max);
         
-        for (int i = 1; i < p; i++) {
+        int num_tuples_to_generate = firstHalfOnly ? (p+1)/2 : p;
+
+        for (int i = 1; i < num_tuples_to_generate; i++) {
             int[] arr = new int[size];
 
             // first
@@ -165,9 +180,9 @@ public class Project {
             indecomposableTuples.add(tuple);
 
             if (printNormal && (allowOverwrite || pw_normal != null)) pw_normal.println(tuple.toCSV());
-            if (!printModified && !printMax) continue;
 
-            // either printModified or printMax: modify the arr
+            if (!(printModified || printMax || printMaxRelation || printModifiedWithoutMax)) continue;
+
             int m_half_floored = m/2;
             for (int j = 0; j < size; j++) {
                 if (arr[j] > m_half_floored) arr[j] -= m;
@@ -176,50 +191,28 @@ public class Project {
 
             if (printModified && (allowOverwrite || pw_modified != null)) pw_modified.println(tuple.toCSV());
             
-            if (printMax && (allowOverwrite || pw_max != null)) pw_max.println(tuple.toCSV() + ",MAX=" + tuple.getAbsoluteMax());
+            int absolute_max = tuple.getAbsoluteMax();
+            Tuple tuple_without_absolute_max = tuple.getNewTupleWithout(absolute_max);
 
-            if (printRelations && (allowOverwrite || pw_relations != null)) {
-                // number of U changes = (p-1)/2 = d-1
-                Tuple relation = get_relation(tuple, d-1); //TODO
+            if (printMax && (allowOverwrite || pw_max != null)) pw_max.println(absolute_max);
+
+            if (printMaxRelation && (allowOverwrite || pw_max_relation != null)) {
+                Tuple max_relation = tuple_without_absolute_max.negate();
+                pw_max_relation.println(max_relation.toCSV());
+            }
+
+            if (printModifiedWithoutMax && (allowOverwrite || pw_without_max != null)) {
+                pw_without_max.println(tuple_without_absolute_max.toCSV());
             }
         }
 
         if (printNormal && pw_normal != null) pw_normal.close();
         if (printModified && pw_modified != null) pw_modified.close();
         if (printMax && pw_max != null) pw_max.close();
-        if (printRelations && pw_relations != null) pw_relations.close();
+        if (printMaxRelation && pw_max_relation != null) pw_max_relation.close();
+        if (printModifiedWithoutMax && pw_without_max != null) pw_without_max.close();
 
         return indecomposableTuples;
-    }
-
-    /**
-     * 
-     * @param modified_indecomposable
-     * @param p - to get number of U changes = (p-1)/2
-     * @return
-     */
-    public static Tuple get_relation(Tuple modified_indecomposable, int p) {
-        int num_changes = (p-1)/2;
-
-        int[] largest_absolute_values = new int[num_changes];
-        Tuple temp_tuple = null;
-        
-        temp_tuple = new Tuple(modified_indecomposable);
-        for (int i = 0; i < num_changes; i++) {
-            largest_absolute_values[i] = temp_tuple.getAbsoluteMax();
-            temp_tuple = temp_tuple.getNewTupleWithout(largest_absolute_values[i]);
-        }
-        
-        List<Integer> relation = modified_indecomposable.toList();
-        temp_tuple = new Tuple(modified_indecomposable);
-        for (int i = 0; i < num_changes; i++) {
-            // TODO: for each absolute max, replace with its corresponding values
-            // largest_absolute_values[i] // TODO
-            // temp_tuple.getNewTupleWithout(largest_absolute_values[i]); // TODO
-
-        }
-
-        return null; // TODO
     }
 
     public static void test_all_m_and_d_combinations(int m_start, int m_end, int d_start, int d_end, boolean print_outputs, boolean automated, boolean overwrite_outputs, boolean print_exceptional_cycles, int max_seconds_allowed, boolean terminate_if_time_limit, String generate_method, boolean validate_halves, boolean check_sum) throws IOException {

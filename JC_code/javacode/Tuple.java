@@ -188,6 +188,19 @@ public class Tuple implements Comparable<Tuple> {
         return result;
     }
 
+    /** Negate a Tuple's elements
+     * 
+     * @return a new Tuple with the values negated
+     */
+    public Tuple negate() {
+        int n = this.elements.length;
+        Tuple result = new Tuple(n);
+        for (int i = 0; i < n; i++) { // for each element in 'this'
+            result.elements[i] = this.elements[i] * -1; // negate (flip sign) 
+        }
+        return result;
+    }
+
     /** Inverse a Tuple by m.
      *  
      *  A Tuple is considered inversed when each element is subtracted from m, and is listed in ascending order.
