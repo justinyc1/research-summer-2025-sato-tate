@@ -1,0 +1,43 @@
+For m = 49
+b = 0 : a1 = -u1*u15*u8*conjugate(u13)*conjugate(u20)*conjugate(u6)*conjugate(u7) - u1 - u10*u17*u3*conjugate(u11)*conjugate(u18)*conjugate(u21)*conjugate(u4) - u10 - u11*u18*u21*u4*conjugate(u10)*conjugate(u17)*conjugate(u3) - u11 - u12*u14*u19*u5*conjugate(u16)*conjugate(u2)*conjugate(u9) - u12 - u13*u20*u6*u7*conjugate(u1)*conjugate(u15)*conjugate(u8) - u13 - u14 - u15 - u16*u2*u9*conjugate(u12)*conjugate(u14)*conjugate(u19)*conjugate(u5) - u16 - u17 - u18 - u19 - u2 - u20 - u21 - u3 - u4 - u5 - u6 - u7 - u8 - u9 - conjugate(u1) - conjugate(u10) - conjugate(u11) - conjugate(u12) - conjugate(u13) - conjugate(u14) - conjugate(u15) - conjugate(u16) - conjugate(u17) - conjugate(u18) - conjugate(u19) - conjugate(u2) - conjugate(u20) - conjugate(u21) - conjugate(u3) - conjugate(u4) - conjugate(u5) - conjugate(u6) - conjugate(u7) - conjugate(u8) - conjugate(u9)
+b = 1 : a1 = 0
+b = 2 : a1 = 0
+b = 3 : a1 = 0
+b = 4 : a1 = 0
+b = 5 : a1 = 0
+b = 6 : a1 = u14 + u21 + u7 + conjugate(u14) + conjugate(u21) + conjugate(u7)
+b = 7 : a1 = 0
+b = 8 : a1 = 0
+b = 9 : a1 = 0
+b = 10 : a1 = 0
+b = 11 : a1 = 0
+b = 12 : a1 = -u14 - u21 - u7 - conjugate(u14) - conjugate(u21) - conjugate(u7)
+b = 13 : a1 = 0
+b = 14 : a1 = 0
+b = 15 : a1 = 0
+b = 16 : a1 = 0
+b = 17 : a1 = 0
+b = 18 : a1 = u14 + u21 + u7 + conjugate(u14) + conjugate(u21) + conjugate(u7)
+b = 19 : a1 = 0
+b = 20 : a1 = 0
+b = 21 : a1 = 0
+b = 22 : a1 = 0
+b = 23 : a1 = 0
+b = 24 : a1 = -u14 - u21 - u7 - conjugate(u14) - conjugate(u21) - conjugate(u7)
+b = 25 : a1 = 0
+b = 26 : a1 = 0
+b = 27 : a1 = 0
+b = 28 : a1 = 0
+b = 29 : a1 = 0
+b = 30 : a1 = u14 + u21 + u7 + conjugate(u14) + conjugate(u21) + conjugate(u7)
+b = 31 : a1 = 0
+b = 32 : a1 = 0
+b = 33 : a1 = 0
+b = 34 : a1 = 0
+b = 35 : a1 = 0
+b = 36 : a1 = -u14 - u21 - u7 - conjugate(u14) - conjugate(u21) - conjugate(u7)
+b = 37 : a1 = 0
+b = 38 : a1 = 0
+b = 39 : a1 = 0
+b = 40 : a1 = 0
+b = 41 : a1 = 0
