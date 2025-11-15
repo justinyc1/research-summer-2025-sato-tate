@@ -4,35 +4,37 @@ from sympy import symbols, cos, pi, integrate, simplify, expand
 import numpy as np
 
 def compute_initial_integral(n):
-    theta = symbols('theta1:11')  # theta1 to theta10
+    theta = symbols('theta1:22')  # theta1 to theta21
 
     integrand = sum(cos(t) for t in theta)
-    integrand += cos(-theta[0] + theta[3] + theta[4] - theta[5] + theta[8])
-    integrand += cos(-theta[1] + theta[2] - theta[6] + theta[7] + theta[9])
+    integrand += cos(-theta[0] + theta[7] + theta[8] - theta[9] + theta[14] - theta[16] + theta[21])
+    integrand += cos(-theta[3] + theta[6] - theta[10] + theta[13] + theta[15] - theta[17] + theta[20])
+    integrand += cos(-theta[4] + theta[5] - theta[11] + theta[12] - theta[18] + theta[19] + theta[22])
 
     integrand_power = expand(integrand**n)
 
-    for t in theta:
+    for t in reversed(theta):
         integrand_power = integrate(integrand_power, (t, 0, 2 * pi))
 
     return simplify(integrand_power)
 
 
 def compute_other_integrals(n):
-    theta5, theta10 = symbols('theta5 theta10')
-    integrand = (cos(theta5) + cos(theta10))**n
+    theta7, theta14, theta21 = symbols('theta7 theta14 theta21')
+    integrand = (cos(theta7) + cos(theta14) + cos(theta21))**n
     integrand = expand(integrand)
-    integrand = integrate(integrand, (theta5, 0, 2 * pi))
-    integrand = integrate(integrand, (theta10, 0, 2 * pi))
+    integrand = integrate(integrand, (theta7, 0, 2 * pi))
+    integrand = integrate(integrand, (theta14, 0, 2 * pi))
+    integrand = integrate(integrand, (theta21, 0, 2 * pi))
     return simplify(integrand)
 
 
 def main():
-    p = 5
+    p = 7
     normal_relations = ((p ** 2 - 1) // 2) - ((p - 1) // 2)
     total_moment_stats = []
 
-    for b in range(20):
+    for b in range(p*(p-1)):
         print(f"b = {b}\n")
         moment_stats = [1]
 
@@ -48,7 +50,7 @@ def main():
                 moment_stats.append(result)
             print()
             total_moment_stats.append(moment_stats)
-        elif b % 4 == 0 and b % 8 != 0:
+        elif b % 6 == 0 and b % 12 != 0:
             for n in range(1, 9):
                 if n % 2 != 0:
                     moment_stats.append(0)
@@ -57,7 +59,7 @@ def main():
                 result *= (2 ** n) / (2 * pi)
                 moment_stats.append(result)
             total_moment_stats.append(moment_stats)
-        elif b % 8 == 0:
+        elif b % 12 == 0:
             for n in range(1, 9):
                 if n % 2 != 0:
                     moment_stats.append(0)
