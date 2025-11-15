@@ -74,7 +74,7 @@ def main():
     for item in total_moment_stats:
         print(f"{item} \n")
 
-    arr = np.array([[float(x) for x in row] for row in total_moment_stats])
+    arr = np.array(total_moment_stats)
     column_averages = np.mean(arr, axis=0)
     print([f"{float(x):.0f}" for x in column_averages])
 
