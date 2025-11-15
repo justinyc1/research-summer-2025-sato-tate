@@ -7,9 +7,9 @@ def compute_initial_integral(n):
     theta = symbols('theta1:22')  # theta1 to theta21
 
     integrand = sum(cos(t) for t in theta)
-    integrand += cos(-theta[0] + theta[7] + theta[8] - theta[9] + theta[14] - theta[16] + theta[21])
-    integrand += cos(-theta[3] + theta[6] - theta[10] + theta[13] + theta[15] - theta[17] + theta[20])
-    integrand += cos(-theta[4] + theta[5] - theta[11] + theta[12] - theta[18] + theta[19] + theta[22])
+    integrand += cos(-theta[0] + theta[5] + theta[6] - theta[7] + theta[12] - theta[14] + theta[19])
+    integrand += cos(-theta[1] + theta[4] - theta[8] + theta[11] + theta[13] - theta[15] + theta[18])
+    integrand += cos(-theta[2] + theta[3] - theta[9] + theta[10] - theta[16] + theta[17] + theta[20])
 
     integrand_power = expand(integrand**n)
 
