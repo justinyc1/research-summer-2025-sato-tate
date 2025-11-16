@@ -1,25 +1,23 @@
 """
 author -- Sabeeha Malikah
-last updated -- 6/10/25
 description -- This program generates all indecomposable tuples for a given m and d value.
                The main method can be customized based on which m values we are interested in (i.e. m = p*q or m = p^2).
                The main method is currently written for m = p^2.
 summary --
-    1. The zmodmzstarset() function is called and the program generates this set for the given m value.
-    2. The v_set() function is called and the program generates the V set for the given m and d value
+    1. The zmodmzstarset() function is invoked and the program generates this set for the given m value.
+    2. The v_set() function is invoked and the program generates the V set for the given m and d value
        using the z_star set produced by zmodmzstar() function.
-       This function calls other functions:
+       This function invokes other functions:
         - verify_not_all_pairs() that checks whether a tuple consists of all pairs. If this is true, the
           tuple is not an exceptional cycle and is not part of the exceptional cycles set. For efficiency, this tuple is
-          not added to the V set either. This significantly reduces the number of tuples in the V set (which is now
-          equivalent to the E set).
+          not added to the V set either. This significantly reduces the number of tuples in the V set.
             * This means that there are fewer tuples that have to be checked with the verify_v_property() function, which
               requires a lot of mathematical computations.
         - verify_v_property() that checks if the tuple satisfies the B set property from our project summary document.
             * Our code treats the V and B set as the same set. (B set contains only ascending tuples from the V set).
-    3. The e_set() function is called which finds all exceptional cycles in the V set. It separates the tuples into
-       sum pairs and no pairs.
-    4. The indecomposable_set() function is called which finds all tuples in the no pairs set that are indecomposable.
+    3. The e_set() function is invoked which finds all exceptional cycles in the V set. It separates the tuples into
+       some pairs and no pairs.
+    4. The indecomposable_set() function is invoked which finds all tuples in the no pairs set that are indecomposable.
 
 """
 
@@ -42,8 +40,6 @@ INPUT:
 OUTPUT:
 - ``z_star`` -- The set representing the z mod m z star set for the given m value.
 """
-
-
 def zmodmzstarset(m):
     z_star = []
     for i in range(1, m):
@@ -60,7 +56,8 @@ appended to the list.
 Only the tuples that satisfy the following conditions are added to the list: 
     1. the elements of the tuple are ascending 
     2. the sum of the elements = m*d
-    3. verify_v_property() returns True
+    3. the tuple is not composed entirely of pairs that sum to m
+    4. verify_v_property() returns True
 
 INPUT:
 - ``m`` -- an odd integer which represents the degree in C_m: y^2=x^m-1
@@ -72,8 +69,6 @@ INPUT:
 OUTPUT:
 - ``v_list`` -- a list represent the V set for the given m and d values. 
 """
-
-
 def v_set(m, d, z_star):
     count = 0
     small_tuple_list = []
@@ -103,7 +98,7 @@ def v_set(m, d, z_star):
     return v_list
 
 """
-This function verifies whether a tuples meets the conditions necessary to be part of the V set.
+This function verifies whether a tuple is not composed entirely of pairs that sum to m.
 
 INPUT:
 - ``u_tuple`` -- a tuple that was generated in the v_set() function that satisfies the properties of the U set.
@@ -117,7 +112,6 @@ OUTPUT:
 - ``False`` -- if the tuple does not satisfy the necessary properties
 
 """
-
 def verify_not_all_pairs(tuple_1, tuple_2, m, d):
     i = 0
     j = d-1
@@ -132,6 +126,21 @@ def verify_not_all_pairs(tuple_1, tuple_2, m, d):
         return False
     return True
 
+"""
+This function verifies whether a tuple meets the conditions necessary to be part of the V set.
+
+INPUT:
+- ``u_tuple`` -- a tuple that was generated in the v_set() function that satisfies the properties of the U set.
+- ``m`` -- an odd integer which represents the degree in C_m: y^2=x^m-1
+- ``d``-- an integer whose range is [1, (m-1)/2]. This integer defines the length of the tuples produced.
+          the tuples have length 2*d.
+- ``z_star`` -- a list representing the z mod m z star set for the given m value that was returned by the zmodmzstar() function.
+
+OUTPUT:
+- ``True`` -- if the tuple satisfies the necessary properties
+- ``False`` -- if the tuple does not satisfy the necessary properties
+
+"""
 def verify_v_property(u_tuple, m, d, z_star):
     t_count = 0
     for t in z_star:
@@ -160,8 +169,6 @@ OUTPUT:
 - ``tuple_list`` -- a list representing the set of all tuples in the V set that are exceptional cycles
 - ``no_pairs`` -- a list representing the subset of the exceptional cycles set that contains tuples containing no pairs 
 """
-
-
 def e_set(m, v_list):
     tuple_list = v_list[:]
     no_pairs = []
@@ -210,8 +217,6 @@ INPUT:
 OUTPUT:
 - ``tuple_list`` -- a list representing a subset of the no pairs set containing the tuples that are indecomposable
 """
-
-
 def indecomposable_set(m, d, no_pairs):
     tuple_list = no_pairs[:]
     for e_tuple in no_pairs:
@@ -227,6 +232,7 @@ def indecomposable_set(m, d, no_pairs):
     #     print(ind_tuple)
     # print("The number of tuple(s) is", len(tuple_list))
     return tuple_list
+
 
 def main():
     # Create a list of primes. This will be useful to loop through.

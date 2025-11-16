@@ -1,13 +1,10 @@
 """
 author -- Sabeeha Malikah
-date created -- 6/23/25
-last modified -- 6/23/25
 description -- We noticed that for m = p^2 and d = (p+1)/2, the indecomposable tuples are the same tuples that are
                from Shioda's Lemma 5.5. This program will use the generalized equation to generate the necessary
                indecomposable tuples for m = p^2.
 version -- This version generates the indecomposable tuples for all m values that satisfy m = p^2 for 2 < p < 1000.
            The tuples generated are modified so that elements i: i > m+1/2 are written as i - m.
-
 """
 
 # IMPORTS
@@ -58,7 +55,7 @@ def main():
         ind_tuple_list = ind_tuple_generator(p, m)
         total_time = time.time() - start_time
 
-        #PRINTING
+        # PRINTING
         with open(full_path, "a") as file:
             # PRINTING SUMMARY
             file.write(f"The program took {total_time} seconds to complete. \n")

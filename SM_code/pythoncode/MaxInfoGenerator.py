@@ -1,3 +1,10 @@
+"""
+author -- Sabeeha Malikah
+description -- This program generates the modified Shioda Tuples. It then identifies the element with the
+               maximum absolute value and writes the rest of the elements in terms of this element. (This is used to
+               generate the identity component matrices.)
+"""
+
 import os
 from pathlib import Path
 
