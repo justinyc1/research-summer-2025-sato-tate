@@ -35,7 +35,7 @@ def main():
     total_moment_stats = []
 
     for b in range(p*(p-1)):
-        print(f"b = {b}\n")
+        print(f"b = {b}: ", end = "")
         moment_stats = [1]
 
         if b == 0:
@@ -45,40 +45,35 @@ def main():
                     moment_stats.append(0)
                     continue
                 result = compute_initial_integral(n)
-                result *= ((2 ** n) / (2 * pi) ** normal_relations)
+                result *= ((2 ** n) / ((2 * pi) ** normal_relations))
                 print(f"{float(result):.4f}")
                 moment_stats.append(result)
             print()
             total_moment_stats.append(moment_stats)
-        elif b % 6 == 0 and b % 12 != 0:
-            for n in range(1, 9):
+        elif b % 6 == 0:
+            for n in range(1, 6):
                 if n % 2 != 0:
                     moment_stats.append(0)
                     continue
                 result = compute_other_integrals(n)
-                result *= (2 ** n) / (2 * pi)
+                result *= ((2 ** n) / ((2 * pi)**3))
                 moment_stats.append(result)
-            total_moment_stats.append(moment_stats)
-        elif b % 12 == 0:
-            for n in range(1, 9):
-                if n % 2 != 0:
-                    moment_stats.append(0)
-                    continue
-                result = compute_other_integrals(n)
-                result *= ((-2) ** n) / (2 * pi)
-                moment_stats.append(result)
+            print(moment_stats)
+            print()
             total_moment_stats.append(moment_stats)
         else:
-            for n in range(1, 9):
+            for n in range(1, 6):
                 moment_stats.append(0)
+            print(moment_stats)
+            print()
             total_moment_stats.append(moment_stats)
 
-    for item in total_moment_stats:
-        print(f"{item} \n")
+    # for item in total_moment_stats:
+    #     print(f"{item} \n")
 
     arr = np.array(total_moment_stats)
     column_averages = np.mean(arr, axis=0)
-    print([f"{float(x):.0f}" for x in column_averages])
+    print([f"{x}" for x in column_averages])
 
 
 main()
