@@ -30,17 +30,14 @@ from itertools import combinations
 # for folder organization
 from pathlib import Path
 
-"""
-This function computes the z mod m z star set given an m value. This set contains integers ranging from [1,m).
-The integers in this set satisfy the following property: gcd(i, m) == 1.
-
-INPUT:
-- ``m`` -- an odd integer which represents the degree in C_m: y^2=x^m-1
-
-OUTPUT:
-- ``z_star`` -- The set representing the z mod m z star set for the given m value.
-"""
 def zmodmzstarset(m):
+    """
+    This function computes the z mod m z star set given an m value. This set contains integers ranging from [1,m).
+    The integers in this set satisfy the following property: gcd(i, m) == 1.
+
+    :param m: an odd integer which represents the degree in C_m: y^2=x^m-1
+    :return: The set representing the z mod m z star set for the given m value.
+    """
     z_star = []
     for i in range(1, m):
         if math.gcd(i, m) == 1:
@@ -48,28 +45,24 @@ def zmodmzstarset(m):
     return z_star
 
 
-"""
-This function computes the V set for a given m and d value. The function generates all d length "half tuples" whose
-values range from [1, (m-1)/2]. It then combines each half tuple with every other half tuple, forming a tuple of length 
-2*d. It checks if the tuple satisfies the properties for the U set and then for the V set. If it does, the tuple is 
-appended to the list.  
-Only the tuples that satisfy the following conditions are added to the list: 
-    1. the elements of the tuple are ascending 
+def v_set(m, d, z_star):
+    """
+    This function computes the V set for a given m and d value. The function generates all d length "half tuples" whose
+    values range from [1, (m-1)/2]. It then combines each half tuple with every other half tuple, forming a tuple of length
+    2*d. It checks if the tuple satisfies the properties for the U set and then for the V set. If it does, the tuple is
+    appended to the list.
+    Only the tuples that satisfy the following conditions are added to the list:
+    1. the elements of the tuple are ascending
     2. the sum of the elements = m*d
     3. the tuple is not composed entirely of pairs that sum to m
     4. verify_v_property() returns True
 
-INPUT:
-- ``m`` -- an odd integer which represents the degree in C_m: y^2=x^m-1
-- ``d``-- an integer whose range is [1, (m-1)/2]. This integer defines the length of the tuples produced.
+    :param m: an odd integer which represents the degree in C_m: y^2=x^m-1
+    :param d: an integer whose range is [1, (m-1)/2]. This integer defines the length of the tuples produced.
           the tuples have length 2*d.
-- ``z_star`` -- a list representing the z mod m z star set for the given m value that was returned by the zmodmzstar() function.
-
-
-OUTPUT:
-- ``v_list`` -- a list represent the V set for the given m and d values. 
-"""
-def v_set(m, d, z_star):
+    :param z_star: a list representing the z mod m z star set for the given m value that was returned by the zmodmzstar() function.
+    :return: a list represent the V set for the given m and d values.
+    """
     count = 0
     small_tuple_list = []
     v_list = []
@@ -85,7 +78,7 @@ def v_set(m, d, z_star):
         while i < len(small_tuple_list):
             reverse_tuple = tuple(m-alpha for alpha in reversed(small_tuple_list[i]))
             if sum(half_tuple) + sum(reverse_tuple) == m*d:
-                if verify_not_all_pairs(half_tuple, reverse_tuple, m, d):
+                if is_not_all_pairs(half_tuple, reverse_tuple, m, d):
                     new_tuple = half_tuple + reverse_tuple
                     if verify_v_property(new_tuple, m, d, z_star):
                         print(new_tuple)
@@ -112,7 +105,8 @@ OUTPUT:
 - ``False`` -- if the tuple does not satisfy the necessary properties
 
 """
-def verify_not_all_pairs(tuple_1, tuple_2, m, d):
+def is_not_all_pairs(tuple_1, tuple_2, m, d):
+    """This function verifies whether a tuple is not composed entirely of pairs that sum to m."""
     i = 0
     j = d-1
     pair_count = 0
@@ -126,22 +120,9 @@ def verify_not_all_pairs(tuple_1, tuple_2, m, d):
         return False
     return True
 
-"""
-This function verifies whether a tuple meets the conditions necessary to be part of the V set.
 
-INPUT:
-- ``u_tuple`` -- a tuple that was generated in the v_set() function that satisfies the properties of the U set.
-- ``m`` -- an odd integer which represents the degree in C_m: y^2=x^m-1
-- ``d``-- an integer whose range is [1, (m-1)/2]. This integer defines the length of the tuples produced.
-          the tuples have length 2*d.
-- ``z_star`` -- a list representing the z mod m z star set for the given m value that was returned by the zmodmzstar() function.
-
-OUTPUT:
-- ``True`` -- if the tuple satisfies the necessary properties
-- ``False`` -- if the tuple does not satisfy the necessary properties
-
-"""
 def verify_v_property(u_tuple, m, d, z_star):
+    """This function verifies whether a tuple meets the conditions necessary to be part of the V set."""
     t_count = 0
     for t in z_star:
         i = 0
@@ -156,20 +137,16 @@ def verify_v_property(u_tuple, m, d, z_star):
     return False
 
 
-"""
-This function computes the E set (set containing exceptional tuples). It creates the following lists:
+def e_set(m, v_list):
+    """
+    This function computes the E set (set containing exceptional tuples). It creates the following lists:
     1. no_pairs -- represents the set with tuples that contain no pairs of elements that add to m.
     2. some_pairs -- represents the set with tuples that contain some but not all pairs of elements that add to m.
 
-INPUT:
-- ``m`` -- an odd integer which represents the degree in C_m: y^2=x^m-1
-- ``v_list`` -- a list representing the V set for the given m and d values that was returned by the v_set() function.
-
-OUTPUT:
-- ``tuple_list`` -- a list representing the set of all tuples in the V set that are exceptional cycles
-- ``no_pairs`` -- a list representing the subset of the exceptional cycles set that contains tuples containing no pairs 
-"""
-def e_set(m, v_list):
+    :param m: an odd integer which represents the degree in C_m: y^2=x^m-1
+    :param v_list: a list representing the V set for the given m and d values that was returned by the v_set() function.
+    :return: tuple_list: a list representing the set of all tuples in the V set that are exceptional cycles, no_pairs: a list representing the subset of the exceptional cycles set that contains tuples containing no pairs
+    """
     tuple_list = v_list[:]
     no_pairs = []
     some_pairs = []
@@ -180,44 +157,33 @@ def e_set(m, v_list):
         for combo in combinations(v_tuple, 2):
             if sum(combo) == m:
                 pair_count += 1
-        # if pair_count == int(len(v_tuple) / 2):
-        #     count -= 1
-        #     tuple_list.remove(v_tuple)
+        if pair_count == int(len(v_tuple) / 2):
+            count -= 1
+            tuple_list.remove(v_tuple)
         if pair_count == 0:
             no_pairs.append(v_tuple)
         else:
             some_pairs.append(v_tuple)
+
     # PRINTING
-    # print("These are the tuple(s) in the E set: ")
-    # for e_tuple in tuple_list:
-    #     print(e_tuple)
-    # print("The number of tuple(s) is", count)
-    # print("These tuples have no pairs that add to m =", m, )
-    # for no_pairs_tuple in no_pairs:
-    #     print(no_pairs_tuple)
-    # print("The number of tuple(s) is", len(no_pairs))
-    # print("These tuples have some (but not all) pairs that add to m =", m, )
-    # for some_pairs_tuple in some_pairs:
-    #     print(some_pairs_tuple)
-    # print("The number of tuple(s) is", len(some_pairs))
-    # print()
+    print("These are the tuple(s) in the E set: ")
+    for e_tuple in tuple_list:
+        print(e_tuple)
+    print("The number of tuple(s) is", count)
+    print("These tuples have no pairs that add to m =", m, )
+    for no_pairs_tuple in no_pairs:
+        print(no_pairs_tuple)
+    print("The number of tuple(s) is", len(no_pairs))
+    print("These tuples have some (but not all) pairs that add to m =", m, )
+    for some_pairs_tuple in some_pairs:
+        print(some_pairs_tuple)
+    print("The number of tuple(s) is", len(some_pairs))
+    print()
     return tuple_list, no_pairs
 
 
-"""
-This functions determines which tuples in the no_pairs set are indecomposable and returns a list of those tuples.
-
-INPUT: 
-- ``m`` -- an odd integer which represents the degree in C_m: y^2=x^m-1
-- ``d``-- an integer whose range is [1, (m-1)/2]. This integer defines the length of the tuples produced.
-          the tuples have length 2*d.
-- ``no_pairs`` -- a list representing the subset of the exceptional cycles set that contains tuples containing no pairs
-                  returned by the e_set() function
-
-OUTPUT:
-- ``tuple_list`` -- a list representing a subset of the no pairs set containing the tuples that are indecomposable
-"""
 def indecomposable_set(m, d, no_pairs):
+    """This functions determines which tuples in the no_pairs set are indecomposable and returns a list of those tuples."""
     tuple_list = no_pairs[:]
     for e_tuple in no_pairs:
         for i in range(2, d, 2):
@@ -227,10 +193,10 @@ def indecomposable_set(m, d, no_pairs):
                         tuple_list.remove(e_tuple)
                         break
     # PRINTING
-    # print("These are the exceptional tuple(s) that are indecomposable: ")
-    # for ind_tuple in tuple_list:
-    #     print(ind_tuple)
-    # print("The number of tuple(s) is", len(tuple_list))
+    print("These are the exceptional tuple(s) that are indecomposable: ")
+    for ind_tuple in tuple_list:
+        print(ind_tuple)
+    print("The number of tuple(s) is", len(tuple_list))
     return tuple_list
 
 

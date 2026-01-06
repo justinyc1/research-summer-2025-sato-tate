@@ -5,7 +5,7 @@ description -- We noticed that for m = p^2 and d = (p+1)/2, the indecomposable t
                indecomposable tuples for m = p^2.
 version -- This version generates the indecomposable tuples for all m values that satisfy m = p^2 for 2 < p < 1000.
            The tuples generated are in their original representation (i.e. not modified to so that elements i: i > m+1/2
-           are written as i - m.
+           are written as i - m).
 """
 
 # IMPORTS
@@ -14,6 +14,12 @@ import time
 from pathlib import Path
 
 def ind_tuple_generator(p, m):
+    """ This function generates the Shioda tuples for a given p value.
+
+    :param p: a prime number from the text file "primes.txt"
+    :param m: the value p**2
+    :return: a list containing all modified Shioda tuples which are also all the indecomposable tuples
+    """
     ind_tuple_list = []
     for i in range(1, p):
         ind_tuple = tuple()
@@ -27,12 +33,13 @@ def ind_tuple_generator(p, m):
     return ind_tuple_list
 
 def main():
-    # Create a list of primes. This will be useful to loop through.
+    # Create a list of primes
     list_of_primes = []
     primes_file = open(r'C:\Users\sabee\PycharmProjects\research-summer-2025-sato-tate\SM_code\pythoncode\primes.txt', "r")
     for prime in primes_file:
         list_of_primes.append(int(prime))
 
+    # Loop through the list of primes. For each prime, generate all indecomposable tuples.
     for p in list_of_primes:
         m = p**2
         d = (p+1)//2

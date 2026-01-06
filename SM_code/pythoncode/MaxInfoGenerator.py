@@ -1,6 +1,7 @@
 """
 author -- Sabeeha Malikah
-description -- This program generates the modified Shioda Tuples. It then identifies the element with the
+description -- This program generates the files in the "max_element_info_output" folder. It first generates the modified
+               Shioda tuples (see folder labeled "modified_shioda_tuples_output"). It then identifies the element with the
                maximum absolute value and writes the rest of the elements in terms of this element. (This is used to
                generate the identity component matrices.)
 """
@@ -9,6 +10,13 @@ import os
 from pathlib import Path
 
 def ind_tuple_generator(p, m):
+    """ This function generates the Shioda tuples for a given p value. The tuples are then modified so that any entry n that
+    is greater than (m-1)/2 is rewritten as n-m.
+
+    :param p: a prime number from the text file "primes.txt"
+    :param m: the value p**2
+    :return: a list containing all modified Shioda tuples which are also all the indecomposable tuples
+    """
     ind_tuple_list = []
     for i in range(1, p):
         ind_tuple = tuple()
@@ -27,12 +35,13 @@ def ind_tuple_generator(p, m):
     return ind_tuple_list
 
 def main():
-    # Create a list of primes. This will be useful to loop through.
+    # Create a list of primes.
     list_of_primes = []
     primes_file = open(r'C:\Users\sabee\PycharmProjects\research-summer-2025-sato-tate\SM_code\pythoncode\primes.txt', "r")
     for prime in primes_file:
         list_of_primes.append(int(prime))
 
+    # Loop through the list of primes. For each prime, generate all indecomposable tuples and max element info.
     for p in list_of_primes:
         m = p**2
         d = (p+1)//2
