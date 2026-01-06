@@ -90,21 +90,7 @@ def v_set(m, d, z_star):
     print()
     return v_list
 
-"""
-This function verifies whether a tuple is not composed entirely of pairs that sum to m.
 
-INPUT:
-- ``u_tuple`` -- a tuple that was generated in the v_set() function that satisfies the properties of the U set.
-- ``m`` -- an odd integer which represents the degree in C_m: y^2=x^m-1
-- ``d``-- an integer whose range is [1, (m-1)/2]. This integer defines the length of the tuples produced.
-          the tuples have length 2*d.
-- ``z_star`` -- a list representing the z mod m z star set for the given m value that was returned by the zmodmzstar() function.
-
-OUTPUT:
-- ``True`` -- if the tuple satisfies the necessary properties
-- ``False`` -- if the tuple does not satisfy the necessary properties
-
-"""
 def is_not_all_pairs(tuple_1, tuple_2, m, d):
     """This function verifies whether a tuple is not composed entirely of pairs that sum to m."""
     i = 0
