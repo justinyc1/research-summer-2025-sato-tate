@@ -4,10 +4,10 @@ description -- This program generates all indecomposable tuples for a given m an
                The main method can be customized based on which m values we are interested in (i.e. m = p*q or m = p^2).
                The main method is currently written for m = p^2.
 summary --
-    1. The zmodmzstarset() function is invoked and the program generates this set for the given m value.
-    2. The v_set() function is invoked and the program generates the V set for the given m and d value
+    1. The zmodmzstarset() function is called and the program generates this set for the given m value.
+    2. The v_set() function is called and the program generates the V set for the given m and d value
        using the z_star set produced by zmodmzstar() function.
-       This function invokes other functions:
+       This function calls other functions:
         - verify_not_all_pairs() that checks whether a tuple consists of all pairs. If this is true, the
           tuple is not an exceptional cycle and is not part of the exceptional cycles set. For efficiency, this tuple is
           not added to the V set either. This significantly reduces the number of tuples in the V set.
@@ -15,9 +15,9 @@ summary --
               requires a lot of mathematical computations.
         - verify_v_property() that checks if the tuple satisfies the B set property from our project summary document.
             * Our code treats the V and B set as the same set. (B set contains only ascending tuples from the V set).
-    3. The e_set() function is invoked which finds all exceptional cycles in the V set. It separates the tuples into
+    3. The e_set() function is called which finds all exceptional cycles in the V set. It separates the tuples into
        some pairs and no pairs.
-    4. The indecomposable_set() function is invoked which finds all tuples in the no pairs set that are indecomposable.
+    4. The indecomposable_set() function is called which finds all tuples in the no pairs set that are indecomposable.
 
 """
 
