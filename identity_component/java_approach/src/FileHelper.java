@@ -1,4 +1,4 @@
-package JC_code.src;
+package identity_component.java_approach.src;
 
 import java.io.File;
 import java.io.IOException;
