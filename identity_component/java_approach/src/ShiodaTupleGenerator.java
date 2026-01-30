@@ -1,4 +1,4 @@
-package JC_code.src; // **remove this if this file is NOT in a folder called 'src'
+package identity_component.java_approach.src; // **remove this if this file is NOT in a folder called 'src'
 
 //===== libraries that are used for this program =====
 import java.util.Set;
