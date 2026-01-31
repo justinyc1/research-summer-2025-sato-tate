@@ -1,7 +1,7 @@
 def component_group_gen(p):
     """
     This function produces a generator of ST(Jac(C_p^2))/ST^0(Jac(C_p^2)). More specifically, the function outputs the non-zero entries of the component group generator (and the remaining entries are zero matrices). 
-    Note that indexing starts are zero here, not one.
+    Note that indexing starts at zero here, not one.
     
     :param p: The prime p in y^2 = x^{p^2} - 1
     """
