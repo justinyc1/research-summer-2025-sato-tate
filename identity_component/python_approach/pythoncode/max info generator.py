@@ -5,7 +5,6 @@ description -- This program generates the files in the "max_element_info_output"
                generate the identity component matrices.)
 """
 
-import os
 from pathlib import Path
 
 def ind_tuple_generator(p, m):

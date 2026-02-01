@@ -8,7 +8,6 @@ version -- This version generates the indecomposable tuples for all m values tha
 """
 
 # IMPORTS
-import os
 import time
 from pathlib import Path
 
