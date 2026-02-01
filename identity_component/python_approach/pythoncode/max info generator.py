@@ -1,5 +1,4 @@
 """
-author -- Sabeeha Malikah
 description -- This program generates the files in the "max_element_info_output" folder. It first generates the modified
                Shioda tuples (see folder labeled "modified_shioda_tuples_output"). It then identifies the element with the
                maximum absolute value and writes the rest of the elements in terms of this element. (This is used to
@@ -35,9 +34,14 @@ def ind_tuple_generator(p, m):
     return ind_tuple_list
 
 def main():
-    # Create a list of primes.
+    # Files
+    base_dir = Path(__file__).resolve().parent
+    output_dir = base_dir.parent/"output"/"max_element_info_outputs"
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    # Create a list of primes
     list_of_primes = []
-    primes_file = open(r'C:\Users\sabee\PycharmProjects\research-summer-2025-sato-tate\SM_code\pythoncode\primes.txt', "r")
+    primes_file = open(base_dir/"primes.txt", "r")
     for prime in primes_file:
         list_of_primes.append(int(prime))
 
@@ -45,11 +49,10 @@ def main():
     for p in list_of_primes:
         m = p**2
         d = (p+1)//2
-        base_output_path = Path(r'C:\Users\sabee\PycharmProjects\research-summer-2025-sato-tate\SM_code\output\max_element_info_output')
         filename = f"m_{m}_max_element_output.txt"
-        full_path = base_output_path / filename
+        full_path = output_dir / filename
 
-        if os.path.exists(full_path):
+        if full_path.exists():
             print(f"Skipping m = {m}, d = {d} - file already exists.")
             continue
 

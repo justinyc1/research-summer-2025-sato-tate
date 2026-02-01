@@ -1,5 +1,4 @@
 """
-author -- Sabeeha Malikah
 description -- We noticed that for m = p^2 and d = (p+1)/2, the indecomposable tuples are the same tuples that are
                from Shioda's Lemma 5.5. This program will use the generalized equation to generate the necessary
                indecomposable tuples for m = p^2.
@@ -33,9 +32,14 @@ def ind_tuple_generator(p, m):
     return ind_tuple_list
 
 def main():
+    # Files
+    base_dir = Path(__file__).resolve().parent
+    output_dir = base_dir.parent/"output"/"shioda_tuples_outputs"
+    output_dir.mkdir(parents=True, exist_ok=True)
+
     # Create a list of primes
     list_of_primes = []
-    primes_file = open(r'C:\Users\sabee\PycharmProjects\research-summer-2025-sato-tate\SM_code\pythoncode\primes.txt', "r")
+    primes_file = open(base_dir/"primes.txt", "r")
     for prime in primes_file:
         list_of_primes.append(int(prime))
 
@@ -44,11 +48,10 @@ def main():
         m = p**2
         d = (p+1)//2
         start_time = time.time()
-        base_output_path = Path(r'C:\Users\sabee\PycharmProjects\research-summer-2025-sato-tate\SM_code\output\shioda_tuples_output')
         filename = f"m_{m}_ind_output.txt"
-        full_path = base_output_path / filename
+        full_path = output_dir / filename
 
-        if os.path.exists(full_path):
+        if full_path.exists():
             print(f"Skipping m = {m}, d = {d} - file already exists.")
             continue
 

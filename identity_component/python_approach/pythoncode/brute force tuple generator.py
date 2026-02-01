@@ -1,5 +1,4 @@
 """
-author -- Sabeeha Malikah
 description -- This program generates all indecomposable tuples for a given m and d value.
                The main method can be customized based on which m values we are interested in (i.e. m = p*q or m = p^2).
                The main method is currently written for m = p^2.
@@ -22,7 +21,6 @@ summary --
 """
 
 # IMPORTS
-import os
 import math
 import time
 from itertools import combinations
@@ -187,9 +185,14 @@ def indecomposable_set(m, d, no_pairs):
 
 
 def main():
+    # Files
+    base_dir = Path(__file__).resolve().parent
+    output_dir = base_dir.parent/"output"/"brute_force_tuples_outputs"
+    output_dir.mkdir(parents=True, exist_ok=True)
+
     # Create a list of primes. This will be useful to loop through.
     list_of_primes = []
-    primes_file = open(r'C:\Users\sabee\PycharmProjects\research-summer-2025-sato-tate\SM_code\pythoncode\primes.txt', "r")
+    primes_file = open(base_dir/"primes.txt", "r")
     for prime in primes_file:
         list_of_primes.append(int(prime))
 
@@ -199,9 +202,8 @@ def main():
             # d = (p+1)//2
             start_time = time.time()
 
-            base_output_path = Path(r'C:\Users\sabee\PycharmProjects\research-summer-2025-sato-tate\SM_code\output\m_p_squared_output')
             folder_name = f"m_{m}_output"
-            folder_path = base_output_path / folder_name
+            folder_path = output_dir / folder_name
             folder_path.mkdir(parents=True, exist_ok=True)  # Create folder if it doesn't exist
 
             filename = f"m_{m}_d_{d}_output.txt"
@@ -209,7 +211,7 @@ def main():
 
 
             z_star = zmodmzstarset(m)
-            if os.path.exists(full_path):
+            if full_path.exists():
                 print(f"Skipping m = {m}, d = {d} — file already exists.")
                 continue
 

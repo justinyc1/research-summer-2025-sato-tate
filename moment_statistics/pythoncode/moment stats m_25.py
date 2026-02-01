@@ -1,5 +1,4 @@
 """
-author -- Sabeeha Malikah
 description -- This program computes the moment statistics for p = 5 (m = 25). For m = 25, sympy integration was used as
                it proved to be more efficient. The integrands come from the a1 coefficients that we computed (see the
                "a1_coeffs" folder).
