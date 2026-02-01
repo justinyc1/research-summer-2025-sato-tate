@@ -9,7 +9,7 @@ tuples for given values of $m$ and $d$. It also contains the output files genera
     * `brute force tuple generator.py` used to generate tuples via brute force. 
     * `demo file.ipynb` contains an example for $p = 5$ on how to use the code.
     * `max info generator.py` identifies the max element in each tuple and then negates the rest of the elements. This is used for constructing the integrals used to compute the moment statistics.
-    * `modified shioda tuples generator.py` updates the indecomposable tuples generated using Shioda's equation so that elements $i$ in a tuple that satisfies $i > \frac{(m + 1)}{2}$ is replaced with $i - m$.
+    * `modified shioda tuples generator.py` updates the indecomposable tuples generated using Shioda's equation so that elements $i$ in a tuple that satisfies $i > \frac{(m + 1)}{2}$ are replaced with $i - m$.
     * `primes.txt` contains a list of all primes less than 1000. These values are looped through as values for $p$.
     * `shioda tuples generator.py` generates all indecomposable tuples for a given value of $p$ such that $d = \frac{(p+1)}{2}$.
 
