@@ -1,4 +1,4 @@
-# Identity Component
+# Identity Component $\text{ST}^{0}(\text{Jac}(\text{C}\_{p^2}))$
 
 ## Approaches
 
