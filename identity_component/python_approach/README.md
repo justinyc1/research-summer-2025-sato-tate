@@ -44,7 +44,7 @@ cd Degeneracy-and-Sato-Tate-Groups-of-C_p2
 
 ### Run
 
-Navigate to the src folder, all scripts are located there.
+Navigate to the src folder, where all the scripts are located.
 ```bash
 cd python_approach/src/
 ```
