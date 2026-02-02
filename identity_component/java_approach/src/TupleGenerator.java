@@ -1,6 +1,6 @@
 package identity_component.java_approach.src; // **remove this if this file is NOT in a folder called 'src'
 
-//===== libraries that are used for this program =====
+//===== libraries that are used in this file =====
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.List;
@@ -534,17 +534,17 @@ public class TupleGenerator {
             boolean hasNoPairs = true;   // assume true, if any element have a pair, set to false
 
             for (int i = 0; i < tuple.size(); ++i) { // for an element at i of tuple
-                boolean ith_element_has_pair = false;
+                boolean ithElementHasPair = false;
 
-                // for any element at i, j loop makes sure to set ith_element_has_pair to true if found a pair, or ith_element_has_pair remains false, which means the tuple is an exceptional cycle
+                // for any element at i, j loop makes sure to set ithElementHasPair to true if found a pair, or ithElementHasPair remains false, which means the tuple is an exceptional cycle
                 for (int j = 0; j < tuple.size(); ++j) { // check every element (as j)
                     if ((tuple.get(i) + tuple.get(j)) % m == 0) {
-                        ith_element_has_pair = true;
+                        ithElementHasPair = true;
                         break;
                     }
                 }
 
-                if (ith_element_has_pair) { // if just one element has a pair then
+                if (ithElementHasPair) { // if just one element has a pair then
                     hasNoPairs = false; 
                     hasOnePair = true; // we assume theres at least one pair
                 } else { // an element don't have a pair
@@ -566,8 +566,8 @@ public class TupleGenerator {
     }
 
     public void populateIndecomposablesAndDecomposableButNoPairsSets(int m, int d, Set<Tuple> noPairs, Set<Tuple> indecomposables, Set<Tuple> decomposableNoPairs, boolean isPrintingOutputs, StringBuilder noPairPrintBuffer) throws CustomException {
-        int min_subset_size = 4;
-        int max_subset_size = 2 * d - 2;
+        int minSubsetSize = 4;
+        int maxSubsetSize = 2 * d - 2;
 
         // ===== indecomposables set and decomposable but no pairs set =====
         // when d = 1,2 (d=1 => 2 elements = all pairs, d=2 => both pairs or no pairs)
@@ -587,9 +587,9 @@ public class TupleGenerator {
         }
         if (d >= 3) { // when d = 2 or less, alpha have at most 4 elements, so there is no indecomposables nor decomposable but no pairs 
             for (Tuple alpha : noPairs) { // each element is an alpha with no pairs
-                boolean divides_m = false;
+                boolean dividesM = false;
                 Tuple subtuple = Tuple.EMPTY_TUPLE;
-                for (int size = min_subset_size; size <= max_subset_size; size+=2) { // for each possible subtuple length:
+                for (int size = minSubsetSize; size <= maxSubsetSize; size+=2) { // for each possible subtuple length:
                     // go though each possible subtuple combination from alpha to find a subtuple that adds to multiple of m
 
                     // init subtuple
@@ -597,23 +597,23 @@ public class TupleGenerator {
 
                     // check init values divides m
                     if (subtuple.sum() % m == 0) {
-                        divides_m = true;
+                        dividesM = true;
                         break;
                     }
 
                     // check every subset combinations if they divides m
                     while (subtuple != null) {
                         if (subtuple.sum() % m == 0) {
-                            divides_m = true;
+                            dividesM = true;
                             break;
                         }
                         subtuple = alpha.getNextAscendingTupleAfter(subtuple);
                     }
 
-                    if (divides_m) break;
+                    if (dividesM) break;
                 }
             // back to for each alpha
-                if (divides_m) {
+                if (dividesM) {
                     if (isPrintingOutputs) noPairPrintBuffer.append("adding to decomposable but no pairs set: " + alpha + ", since subtuple = " + subtuple + "\n");
                     decomposableNoPairs.add(alpha);
                     continue;
