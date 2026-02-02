@@ -8,7 +8,14 @@ Please ensure to have the latest version of Sage/SageMath installed.
 
 > Tested with version 10.7
 
-An official installation guide can be found [here](https://doc.sagemath.org/html/en/installation/index.html#) for Windows, macOS, and Linux-based users.  
+An official Sage/SageMath installation guide can be found [here](https://doc.sagemath.org/html/en/installation/index.html#) for Windows, macOS, and Linux-based users.  
+
+To clone the repository, please install Git and run the following in a terminal:
+
+```bash
+git clone https://github.com/justinyc1/Degeneracy-and-Sato-Tate-Groups-of-C_p2.git
+cd Degeneracy-and-Sato-Tate-Groups-of-C_p2
+```
 
 ## Organization
 
