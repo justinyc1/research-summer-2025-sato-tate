@@ -62,7 +62,7 @@ javac *.java
 
 ## Legend
 
-### `src`:
+### `src/`:
 
 - `ShiodaTupleGenerator.java` is a program that is used to generate indecomposable tuples using Lemma 5.5 from Shioda's paper. 
 - `TupleGenerator.java` is a program that is used to generate tuples via brute force.
@@ -70,7 +70,7 @@ javac *.java
 - `FileHelper.java` contains helper functions used to assist with maintaining folder structure.
 - `Tuple.java` is a custom integer tuple class with a bunch of helper functions used in the tuple generator programs.
 
-### `outputs`:
+### `outputs/`:
 
 - `indecomposable_csvs` contains indecomposable tuples for each $m,d$, where $m=p^2$.
 - `modified_csvs` contains selected and modified indecomposable tuple(s) as stated in **Remark 3.23**.
