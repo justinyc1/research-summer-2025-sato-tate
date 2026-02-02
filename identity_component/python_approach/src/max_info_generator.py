@@ -1,6 +1,6 @@
 """
-description -- This program generates the files in the "max_element_info_output" folder. It first generates the modified
-               Shioda tuples (see folder labeled "modified_shioda_tuples_output"). It then identifies the element with the
+description -- This program generates the files in the "max_element_info_outputs" folder. It first generates the modified
+               Shioda tuples (see folder labeled "modified_shioda_tuples_outputs"). It then identifies the element with the
                maximum absolute value and writes the rest of the elements in terms of this element. (This is used to
                generate the identity component matrices.)
 """
