@@ -1,7 +1,7 @@
 
 # Degeneracy and Sato-Tate Groups of $y^2=x^{p^2}-1$
 
-This repository contains code for [Degeneracy and Sato-Tate groups of y^2=x^{p^2}-1](https://arxiv.org/abs/2512.03299). The code is divided into three categories: the component group, identity component, and moment statistics.
+This repository contains code for [Degeneracy and Sato-Tate Groups of y^2=x^{p^2}-1](https://arxiv.org/abs/2512.03299). The code is divided into three categories: the component group, identity component, and moment statistics.
 
 ## Installation, Usage, and Demos
 
