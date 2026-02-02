@@ -22,11 +22,11 @@ Ensure the following are installed:
     * SciPy -- for numerical integration
     * SymPy -- for symbolic computation and integration
 
-To install these libraries:
+    To install these libraries:
 
-```bash
-pip install numpy scipy sympy
-```
+    ```bash
+    pip install numpy scipy sympy
+    ```
 
 
 ### Clone the Repository
