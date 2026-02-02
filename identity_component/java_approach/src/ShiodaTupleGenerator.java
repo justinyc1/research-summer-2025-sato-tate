@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 
 public class ShiodaTupleGenerator {
-    private static final String outputPath = "JC_code\\outputs";
+    private static final String outputPath = "identity_component\\java_approach\\outputs";
     private boolean isGeneratingFirstHalfOnly;
     private boolean isPrintingIndecomposable;
     private boolean isPrintingModified;
@@ -18,12 +18,13 @@ public class ShiodaTupleGenerator {
     private boolean isPrintingModifiedWithoutMax;
     private boolean isPrintingRelation;
     private boolean overwritingOutputs;
-    private int start;
-    private int end;
+    private int pStart;
+    private int pEnd;
 
     public static void main(String[] args) throws CustomException, IOException {
         int pStart = 3;
         int pEnd = 200;
+        
         // if (args.length != 2) throw new CustomException("please enter two arguments representing the starting and ending p values");
 
         // int pStart = Integer.valueOf(args[0]);
@@ -42,8 +43,8 @@ public class ShiodaTupleGenerator {
     public ShiodaTupleGenerator(int pStart, int pEnd, boolean overwriteOutputs, boolean firstHalfOnly, boolean printIndecomposable, boolean printModified, boolean printModifiedMax, boolean printModifiedWithoutMax, boolean printRelation) throws CustomException, FileNotFoundException {
         if (pStart < 3) throw new CustomException("The minimum starting p value is 3.");
 
-        start = pStart;
-        end = pEnd;
+        this.pStart = pStart;
+        this.pEnd = pEnd;
         
         // init flags
         isGeneratingFirstHalfOnly = firstHalfOnly;
@@ -53,22 +54,25 @@ public class ShiodaTupleGenerator {
         isPrintingModifiedMax = printModifiedMax;
         isPrintingModifiedWithoutMax = printModifiedWithoutMax;
         isPrintingRelation = printRelation;
-
-        // create folders if they don't exist
-        if (isPrintingIndecomposable) FileHelper.createFolderIfNotExist(new File(outputPath), "indecomposable_csvs");
-        if (isPrintingModified) FileHelper.createFolderIfNotExist(new File(outputPath), "modified_csvs");
-        if (isPrintingModifiedMax) FileHelper.createFolderIfNotExist(new File(outputPath), "modified_max_csvs");
-        if (isPrintingModifiedWithoutMax) FileHelper.createFolderIfNotExist(new File(outputPath), "modified_without_max_csvs");
-        if (isPrintingRelation) FileHelper.createFolderIfNotExist(new File(outputPath), "relation_csvs");
     }
 
     public void generate() throws FileNotFoundException, CustomException {
-        for (int p = start; p <= end; p++) {
+        createFolderIfNotExist();
+
+        for (int p = pStart; p <= pEnd; p++) {
             if (p % 2 == 0) continue; // odd p only
             if (!isPrime(p)) continue; // prime p only
 
             generateShiodaIndecomposables(p);
         }
+    }
+
+    public void createFolderIfNotExist() throws CustomException, FileNotFoundException {
+        if (isPrintingIndecomposable) FileHelper.createFolderIfNotExist(new File(outputPath), "indecomposable_csvs");
+        if (isPrintingModified) FileHelper.createFolderIfNotExist(new File(outputPath), "modified_csvs");
+        if (isPrintingModifiedMax) FileHelper.createFolderIfNotExist(new File(outputPath), "modified_max_csvs");
+        if (isPrintingModifiedWithoutMax) FileHelper.createFolderIfNotExist(new File(outputPath), "modified_without_max_csvs");
+        if (isPrintingRelation) FileHelper.createFolderIfNotExist(new File(outputPath), "relation_csvs");
     }
 
     public Set<Tuple> generateShiodaIndecomposables(int p) throws FileNotFoundException, CustomException {

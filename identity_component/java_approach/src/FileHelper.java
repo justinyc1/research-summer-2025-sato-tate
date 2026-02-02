@@ -5,10 +5,8 @@ import java.io.IOException;
 import java.nio.file.*;
 
 public class FileHelper {
-    static String myRootDir = "JC_code";
-    static String outputsDir = "JC_code\\outputs";
-    static String ecOutputsDir = "JC_code\\outputs_ec_csvs";
-    static String myTestDir = "JC_code\\.myTest";
+    static String myRootDir = "identity_component\\java_approach";
+    static String outputsDir = "identity_component\\java_approach\\outputs";
     public static void main(String[] args) throws CustomException, IOException {
         // printDirectoryAndContents(new File(myRootDir));
         // deleteAllEmptyFiles(new File(outputsDir));
