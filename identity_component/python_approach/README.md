@@ -41,7 +41,7 @@ To generate tuples, modify the script and set the desired $p$ or $d$ value. Outp
 
 To generate tuples:
 ```bash
-python <<script_name.py>>
+python <script_name.py>
 ```
 
 ## Folder Structure
