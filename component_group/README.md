@@ -19,5 +19,5 @@ cd Degeneracy-and-Sato-Tate-Groups-of-C_p2
 
 ## Organization
 
-- `component_group_generator.sage` contains the (Sage) function used to compute a generator of the component group.
+- `component_group_generator.sage` contains the function used to compute a generator of the component group.
 - `example.ipynb` is a demonstration of computing a component group generator for $p=5, 7$.
