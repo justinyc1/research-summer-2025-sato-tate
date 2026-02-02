@@ -3,9 +3,7 @@
 
 This repository contains code for [Degeneracy and Sato-Tate groups of y^2=x^{p^2}-1](https://arxiv.org/abs/2512.03299). The code are split into three subcategories: component group generator, identity component, and moment statistics.
 
-## Installation, Usage, Demo
-
-Please refer to each section
+Please refer to each subcategory for additional information on installation, usage, and demos.
 
 ## Authors
 - Justin Chen ([@justinyc1](https://github.com/justinyc1))
