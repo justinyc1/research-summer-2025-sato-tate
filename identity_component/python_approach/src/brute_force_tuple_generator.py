@@ -187,7 +187,7 @@ def indecomposable_set(m, d, no_pairs):
 def main():
     # Files
     base_dir = Path(__file__).resolve().parent
-    output_dir = base_dir.parent/"output"/"brute_force_tuples_outputs"
+    output_dir = base_dir.parent/"outputs"/"brute_force_tuples_outputs"
     output_dir.mkdir(parents=True, exist_ok=True)
 
     # Create a list of primes. This will be useful to loop through.

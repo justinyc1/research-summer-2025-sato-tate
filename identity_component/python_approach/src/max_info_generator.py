@@ -35,7 +35,7 @@ def ind_tuple_generator(p, m):
 def main():
     # Files
     base_dir = Path(__file__).resolve().parent
-    output_dir = base_dir.parent/"output"/"max_element_info_outputs"
+    output_dir = base_dir.parent/"outputs"/"max_element_info_outputs"
     output_dir.mkdir(parents=True, exist_ok=True)
 
     # Create a list of primes

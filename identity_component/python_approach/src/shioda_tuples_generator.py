@@ -33,7 +33,7 @@ def ind_tuple_generator(p, m):
 def main():
     # Files
     base_dir = Path(__file__).resolve().parent
-    output_dir = base_dir.parent/"output"/"shioda_tuples_outputs"
+    output_dir = base_dir.parent/"outputs"/"shioda_tuples_outputs"
     output_dir.mkdir(parents=True, exist_ok=True)
 
     # Create a list of primes
