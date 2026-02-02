@@ -18,7 +18,6 @@ import java.util.HashMap;
 
 public class TupleGenerator {
     private static final String outputPath = "identity_component\\java_approach\\outputs";
-    // ===== base project flags =====
     private boolean skipThisMAndD;
     private boolean terminateIfTimeLimit;
     
@@ -36,7 +35,6 @@ public class TupleGenerator {
     private boolean checkingOnlyCombinationsWithIndecomposables;
     private boolean isPrintingStartAndEndTimes;
     
-    
     private long startTimeInNano = -1;
 
     private int mStart;
@@ -45,19 +43,29 @@ public class TupleGenerator {
     private int dEnd;
 
     public static void main(String[] args) throws CustomException, IOException {
-        int mStart = 9;
-        int mEnd = 27;
-        int dStart = 2;
-        int dEnd = 8;
-
-        // if (args.length != 4) throw new CustomException("please enter four arguments representing the starting and ending m and d values");
+        if (args.length != 4) throw new CustomException("please enter four arguments representing the starting and ending m and d values");
         
-        // int mStart = Integer.valueOf(args[0]);
-        // int mEnd = Integer.valueOf(args[1]);
-        // int dStart = Integer.valueOf(args[2]);
-        // int dEnd = Integer.valueOf(args[3]);
+        int mStart = Integer.valueOf(args[0]);
+        int mEnd = Integer.valueOf(args[1]);
+        int dStart = Integer.valueOf(args[2]);
+        int dEnd = Integer.valueOf(args[3]);
 
-        TupleGenerator generator = new TupleGenerator(mStart, mEnd, dStart, dEnd, true, false, false, false, 1800, "halves", false, false, false, true);
+        TupleGenerator generator = new TupleGenerator(
+            mStart,    // mStart (inclusive)
+            mEnd,    // mEnd (inclusive)
+            dStart,    // dStart (inclusive)
+            dEnd,    // dEnd (inclusive)
+            true,    // automated
+            false,    // printOutputs
+            false,    // overwriteOutputs
+            false,    // printExceptionalCycles
+            3600,    // maxSecondsAllowed, in seconds
+            "halves",    // method, generally "halves" > "recursion"
+            false,    // validateHalves
+            false,    // checkSum
+            false,    // onlyCheckCombinationsWithIndecomposables
+            true    // printStartAndEndTimes
+        );
 
         generator.generate();
     }

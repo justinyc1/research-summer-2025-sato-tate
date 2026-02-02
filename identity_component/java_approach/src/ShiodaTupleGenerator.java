@@ -22,15 +22,23 @@ public class ShiodaTupleGenerator {
     private int pEnd;
 
     public static void main(String[] args) throws CustomException, IOException {
-        int pStart = 3;
-        int pEnd = 200;
+        if (args.length != 2) throw new CustomException("please enter two arguments representing the starting and ending p values");
+
+        int pStart = Integer.valueOf(args[0]);
+        int pEnd = Integer.valueOf(args[1]);
+
+        ShiodaTupleGenerator generator = new ShiodaTupleGenerator(
+            pStart,    // pStart (inclusive)
+            pEnd,    // pEnd (inclusive)
+            false,    // overwriteOutputs 
+            true,    // firstHalfOnly 
+            true,    // printIndecomposable 
+            true,    // printModified 
+            true,    // printModifiedMax 
+            true,    // printModifiedWithoutMax 
+            true    // printRelation
+        );
         
-        // if (args.length != 2) throw new CustomException("please enter two arguments representing the starting and ending p values");
-
-        // int pStart = Integer.valueOf(args[0]);
-        // int pEnd = Integer.valueOf(args[1]);
-
-        ShiodaTupleGenerator generator = new ShiodaTupleGenerator(pStart, pEnd);
         generator.generate();
     }
 
@@ -39,7 +47,7 @@ public class ShiodaTupleGenerator {
         this(pStart, pEnd, false,true,true, true, true, true, true);
     }
 
-    // full constructor
+// full constructor
     public ShiodaTupleGenerator(int pStart, int pEnd, boolean overwriteOutputs, boolean firstHalfOnly, boolean printIndecomposable, boolean printModified, boolean printModifiedMax, boolean printModifiedWithoutMax, boolean printRelation) throws CustomException, FileNotFoundException {
         if (pStart < 3) throw new CustomException("The minimum starting p value is 3.");
 
