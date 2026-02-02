@@ -1,4 +1,4 @@
-# The Component Group $\text{ST}(\text{Jac}(\text{C}_{p^2}))/\text{ST}^{0}(\text{Jac}(\text{C}\_{p^2}))$
+# Component Group $\text{ST}(\text{Jac}(\text{C}_{p^2}))/\text{ST}^{0}(\text{Jac}(\text{C}\_{p^2}))$
 
 This folder contains the code used pertaining to the component group of $\text{ST}(\text{Jac}(\text{C}_{p^2}))$.
 
