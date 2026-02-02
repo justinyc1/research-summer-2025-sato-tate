@@ -33,16 +33,16 @@ cd Degeneracy-and-Sato-Tate-Groups-of-C_p2
 ### Run
 
 Navigate to the src folder, all scripts are located there.
-    ```bash
-    cd python_approach/src/
-    ```
+```bash
+cd python_approach/src/
+```
 
 To generate tuples, modify the script and set the desired $p$ or $d$ value. Outputs will automatically be generated in the respective folder.
 
 To generate tuples:
-    ```bash
-    python <<script_name.py>>
-    ```
+```bash
+python <<script_name.py>>
+```
 
 ## Folder Structure
 
