@@ -5,7 +5,7 @@ This repository contains code for [Degeneracy and Sato-Tate groups of y^2=x^{p^2
 
 ## Installation, Usage, and Demos
 
-Please refer to each category for additional information on installation, usage, and demos.
+Please refer to each folder for additional information on installation, usage, and demos.
 
 ## Authors
 - Justin Chen ([@justinyc1](https://github.com/justinyc1))
