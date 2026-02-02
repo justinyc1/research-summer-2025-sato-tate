@@ -19,6 +19,18 @@ Ensure the following are installed:
     git --version
     ```
 
+* (Optional) Jupyter Notebook - required only to run the demo notebook (`demo.ipynb`)
+
+    If Jupyter is not installed, install it with:
+    ```bash
+    pip install notebook
+    ```
+
+    Then run
+    ```bash
+    jupyter notebook demo.ipynb
+    ```
+
 > This code uses only Python’s standard library (`math`, `time`, `itertools`, `pathlib`, etc.), so no additional packages are required.
 
 ### Clone the Repository
@@ -53,7 +65,7 @@ python <script_name.py>
     * `shioda_tuples_generator.py` generates all indecomposable tuples for a given value of $p$ such that $d = \frac{(p+1)}{2}$.
     * `modified_shioda_tuples_generator.py` updates the indecomposable tuples generated using Shioda's equation so that elements $i$ in a tuple that satisfies $i > \frac{(m + 1)}{2}$ are replaced with $i - m$.
     * `max_info_generator.py` identifies the absolute max element in each of the modified tuples and then negates the rest of the elements. This is used for constructing the integrals used to compute the moment statistics.
-    * `demo_file.ipynb` contains an example for $p = 5$ on how to use the code.
+    * `demo.ipynb` contains an example for $p = 5$ on how to use the code.
     * `primes.txt` contains a list of all primes less than 1000. These values are looped through as values for $p$.
 
 
