@@ -13,7 +13,7 @@ Please ensure to have the latest version of Sage/SageMath installed. An official
 
 > Tested with version 10.7  
 
-- **(Optional)** To run ```example.ipynb``` locally, one method to do so is
+- ==**(Optional)**== To run ```example.ipynb``` locally, one method to do so is
 
     1. Download and install Sage/SageMath
     2. Launch Jupyter from Sage's terminal/shell with
