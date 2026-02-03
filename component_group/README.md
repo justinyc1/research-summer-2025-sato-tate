@@ -10,13 +10,6 @@ Please ensure to have the latest version of Sage/SageMath installed.
 
 An official Sage/SageMath installation guide can be found [here](https://doc.sagemath.org/html/en/installation/index.html#) for Windows, macOS, and Linux-based users.  
 
-To clone the repository, please install Git and run the following in a terminal:
-
-```bash
-git clone https://github.com/justinyc1/Degeneracy-and-Sato-Tate-Groups-of-C_p2.git
-cd Degeneracy-and-Sato-Tate-Groups-of-C_p2
-```
-
 *(Optional)* To run ```example.ipynb``` locally
 
 1. Download and install Sage/SageMath
@@ -30,6 +23,13 @@ sage -n jupyter
 3. Open ```example.ipynb``` and ensure SageMath is selected as the kernel.
 
 > Note: Installing SageMath via ```pip install sagemath``` is insufficient, as a limited package of Sage/SageMath will be installed. Instead, please install the *full* Sage/SageMath distribution from its [official website](https://www.sagemath.org/).
+
+To clone the repository, please install Git and run the following in a terminal:
+
+```bash
+git clone https://github.com/justinyc1/Degeneracy-and-Sato-Tate-Groups-of-C_p2.git
+cd Degeneracy-and-Sato-Tate-Groups-of-C_p2
+```
 
 ## Organization
 
