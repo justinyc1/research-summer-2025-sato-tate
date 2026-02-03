@@ -23,7 +23,7 @@ Please ensure to have the latest version of Sage/SageMath installed. An official
         sage -n jupyter
     ```
 
-    and follow the instructions on the screen
+        and follow the instructions on the screen
 
     3. Open ```example.ipynb``` and ensure SageMath is selected as the kernel.
 
