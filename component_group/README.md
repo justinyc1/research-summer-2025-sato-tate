@@ -4,8 +4,8 @@ This folder contains the code used pertaining to the component group of $\text{S
 
 ## Organization
 
-- `component_group_generator.sage` &#151 Contains the function used to compute a generator of the component group.
-- `example.ipynb` &#151 A demonstration of computing a component group generator for $p=5, 7$.
+- `component_group_generator.sage` — Contains the function used to compute a generator of the component group.
+- `example.ipynb` — A demonstration of computing a component group generator for $p=5, 7$.
 
 ## Installation and Prerequisites  
 
