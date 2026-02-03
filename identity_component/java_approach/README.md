@@ -47,8 +47,6 @@ javac *.java
     ```
     > Replace pStart and pEnd (both inclusive) with desired ranges for $p$.
 
-<br>
-
 - To generate tuples of any $m$ and $d$ values via brute force:
 
     ```bash
@@ -56,11 +54,9 @@ javac *.java
     ```
     > Replace mStart, mEnd, dStart, and dEnd (all inclusive) with desired ranges for $m$ and $d$.
 
-<br>
-
 - For more advanced flags that are not yet accessible via command-line arguments, you must modify them directly in the main() method.
 
-## Legend
+## File Structure
 
 ### `src/`:
 
