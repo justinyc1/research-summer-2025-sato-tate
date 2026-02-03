@@ -17,14 +17,19 @@ git clone https://github.com/justinyc1/Degeneracy-and-Sato-Tate-Groups-of-C_p2.g
 cd Degeneracy-and-Sato-Tate-Groups-of-C_p2
 ```
 
-*(Optional)* To run [example.ipynb](https://github.com/justinyc1/research-summer-2025-sato-tate/blob/paper/component_group/example.ipynb) locally, please install Jupyter Notebook with 
+*(Optional)* To run [example.ipynb](https://github.com/justinyc1/research-summer-2025-sato-tate/blob/paper/component_group/example.ipynb) locally
+
+1. Download and install Sage/SageMath
+2. Launch Jupyter from Sage's terminal/shell, or register the kernel with
+
+```bash
+sage -pip install jupyter
+sage -n jupyter
 ```
-pip install  notebook
-```
-and run
-```
-jupyter notebook example.ipynb
-```
+
+3. Open ```example.ipynb``` and ensure SageMath is selected as the kernel.
+
+> Note: Installing SageMath via ```pip install sagemath``` is insufficient, as a limited package of Sage/SageMath will be installed. Instead, please install the *full* Sage/SageMath distribution from its [official website](https://www.sagemath.org/).
 
 ## Organization
 
