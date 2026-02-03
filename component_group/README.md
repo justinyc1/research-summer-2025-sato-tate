@@ -15,16 +15,16 @@ Please ensure to have the latest version of Sage/SageMath installed. An official
 
 - ***(Optional)*** To run ```example.ipynb``` locally
 
-    1. Download and install Sage/SageMath
-    2. Launch Jupyter from Sage's terminal/shell, or register the kernel with
+1. Download and install Sage/SageMath
+2. Launch Jupyter from Sage's terminal/shell, or register the kernel with
 
-    ```bash
-        sage -pip install jupyter
-        sage -n jupyter
-    ```
+```bash
+    sage -pip install jupyter
+    sage -n jupyter
+```
 
-    3. Open ```example.ipynb``` and ensure SageMath is selected as the kernel.
-    
+3. Open ```example.ipynb``` and ensure SageMath is selected as the kernel.
+
     > Note: Installing Sage/SageMath via ```pip install sagemath``` is insufficient, as a limited package of Sage/SageMath will be installed. Instead, please install the *full* Sage/SageMath distribution from its [official website](https://www.sagemath.org/).
 
 ## Cloning
