@@ -4,11 +4,9 @@ This folder contains the code used pertaining to the component group of $\text{S
 
 ## Installation and Prerequisites  
 
-Please ensure to have the latest version of Sage/SageMath installed.
+Please ensure to have the latest version of Sage/SageMath installed. An official Sage/SageMath installation guide can be found [here](https://doc.sagemath.org/html/en/installation/index.html#) for Windows, macOS, and Linux-based users.
 
-> Tested with version 10.7
-
-An official Sage/SageMath installation guide can be found [here](https://doc.sagemath.org/html/en/installation/index.html#) for Windows, macOS, and Linux-based users.  
+> Tested with version 10.7  
 
 *(Optional)* To run ```example.ipynb``` locally
 
