@@ -24,6 +24,8 @@ sage -n jupyter
 
 > Note: Installing SageMath via ```pip install sagemath``` is insufficient, as a limited package of Sage/SageMath will be installed. Instead, please install the *full* Sage/SageMath distribution from its [official website](https://www.sagemath.org/).
 
+### Cloning 
+
 To clone the repository, please install Git and run the following in a terminal:
 
 ```bash
