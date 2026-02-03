@@ -19,8 +19,8 @@ Please ensure to have the latest version of Sage/SageMath installed. An official
 2. Launch Jupyter from Sage's terminal/shell, or register the kernel with
 
 ```bash
-sage -pip install jupyter
-sage -n jupyter
+    sage -pip install jupyter
+    sage -n jupyter
 ```
 
 3. Open ```example.ipynb``` and ensure SageMath is selected as the kernel.
@@ -32,6 +32,6 @@ sage -n jupyter
 To clone the repository, please install Git and run the following in a terminal:
 
 ```bash
-git clone https://github.com/justinyc1/Degeneracy-and-Sato-Tate-Groups-of-C_p2.git
-cd Degeneracy-and-Sato-Tate-Groups-of-C_p2
+    git clone https://github.com/justinyc1/Degeneracy-and-Sato-Tate-Groups-of-C_p2.git
+    cd Degeneracy-and-Sato-Tate-Groups-of-C_p2
 ```
